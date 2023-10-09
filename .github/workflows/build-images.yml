@@ -64,10 +64,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      -
-        run: |
-          echo ${{ steps.meta.outputs.tags }}
-          echo ${{ steps.meta.outputs.labels }}
+#      -
+#        run: |
+#          echo ${{ steps.meta.outputs.tags }}
+#          echo ${{ steps.meta.outputs.labels }}
       -
         uses: docker/build-push-action@v4
         with:

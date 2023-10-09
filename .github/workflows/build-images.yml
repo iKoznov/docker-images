@@ -1,15 +1,20 @@
-name: Build image
+name: Build images
 on:
   workflow_dispatch:
   push:
-    branches: [ "main","master" ]
+    branches: [ "main", "master" ]
 
 permissions:
   contents: read
   packages: write
 
 jobs:
-  build-image:
+  build-images:
+    strategy:
+      matrix:
+        include:
+          - directory: jupyter
+            dockerfile: ubuntu-pybind11
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,8 +22,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: |
-            ghcr.io/${{ github.repository }}
+          images: ghcr.io/${{ matrix.directory }}/${{ matrix.dockerfile }}
           tags: |
             type=schedule
             type=ref,event=branch
@@ -37,8 +41,8 @@ jobs:
       -
         uses: docker/build-push-action@v4
         with:
-          context: jupyter
-          file: jupyter/ubuntu-pybind11.Dockerfile
+          context: ${{ matrix.directory }}
+          file: ${{ matrix.directory }}/${{ matrix.dockerfile }}.Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

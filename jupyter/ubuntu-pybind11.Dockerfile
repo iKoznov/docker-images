@@ -43,3 +43,4 @@ RUN . /opt/venv/bin/activate \
     -r /tmp/requirements.txt
 
 RUN jupyter labextension disable "@jupyterlab/apputils-extension:announcements"
+

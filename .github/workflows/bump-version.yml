@@ -15,6 +15,8 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
       -
         run: |
           git config --local user.email "action@github.com"

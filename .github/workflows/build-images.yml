@@ -1,14 +1,13 @@
 name: Build images
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: "0 0 * * 6"  # At 00:00 on Saturday.
+#  workflow_dispatch:
+#  schedule:
+#    - cron: "0 0 * * 6"  # At 00:00 on Saturday.
     #- cron: "*/15 * * * *"
-  create:
-    tags: "**"
-  push:
-    branches: [ main, master ]
-    tags: "**"
+  create
+#  push:
+#    branches: [ main, master ]
+#    tags: "**"
 #  workflow_run:
 #    workflows: [ bump-version ]
 #    types:

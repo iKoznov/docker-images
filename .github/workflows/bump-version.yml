@@ -20,7 +20,7 @@ jobs:
       -
         #uses: anothrNick/github-tag-action@1
         uses: phish108/autotag-action@v1.1.55
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_BRANCHES: main,master
-          WITH_V: true
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          release-branch: main,master
+          with-v: true

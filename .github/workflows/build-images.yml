@@ -14,7 +14,7 @@ permissions:
   packages: write
 
 jobs:
-  build-images:
+  build-image:
     strategy:
       matrix:
         include:

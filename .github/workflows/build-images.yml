@@ -19,7 +19,7 @@ jobs:
       matrix:
         include:
           - directory: jupyter
-            dockerfile: ubuntu-pybind11
+            dockerfile: ubuntu-pybind
 
     runs-on: ubuntu-latest
 

@@ -4,13 +4,15 @@ on:
   schedule:
     - cron: "0 0 * * 6"  # At 00:00 on Saturday.
     - cron: "*/15 * * * *"
+  create:
+    tags: "**"
   push:
     branches: [ main, master ]
     tags: "**"
-  workflow_run:
-    workflows: [ bump-version ]
-    types:
-      - completed
+#  workflow_run:
+#    workflows: [ bump-version ]
+#    types:
+#      - completed
 
 permissions:
   contents: read

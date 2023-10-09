@@ -37,11 +37,12 @@ jobs:
           echo "${{ steps.tagger.outputs.new-tag }}" > VERSION.txt
           git add .
           git commit -am "version bump to ${{ steps.tagger.outputs.new-tag }}"
-      -
-        name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          git push
+#      -
+#        name: Push changes
+#        uses: ad-m/github-push-action@master
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
       -
         uses: phish108/autotag-action@v1.1.55
         with:

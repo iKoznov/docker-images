@@ -20,6 +20,23 @@ jobs:
       -
         #uses: anothrNick/github-tag-action@1
         uses: phish108/autotag-action@v1.1.55
+        id: tagger
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          release-branch: main,master
+          with-v: true
+          dry-run: true
+      -
+        run: |
+          echo "${{ steps.tagger.outputs.new-tag }}" > VERSION.txt
+          git commit -m "version bump to ${{ steps.tagger.outputs.new-tag }}" -a
+      -
+        name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      -
+        uses: phish108/autotag-action@v1.1.55
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           release-branch: main,master

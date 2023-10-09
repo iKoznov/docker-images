@@ -7,7 +7,7 @@ on:
     #- cron: "*/15 * * * *"
   push:
     #branches: [ main, master ]
-    tags: "v*"
+    #tags: "v*"
   # https://stackoverflow.com/questions/60418323/triggering-a-new-workflow-from-another-workflow
 #  workflow_run:
 #    workflows: [ "Bump version" ]

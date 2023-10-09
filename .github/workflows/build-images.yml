@@ -3,8 +3,8 @@ on:
   workflow_dispatch:
   schedule:
     # At 00:00 on Saturday.
-    #- cron: "0 0 * * 6"
-    - cron: '*/5 * * * *'
+    - cron: "0 0 * * 6"
+    - cron: "*/15 * * * *"
   push:
     branches: [ "main", "master" ]
 

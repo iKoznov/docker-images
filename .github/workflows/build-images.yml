@@ -7,10 +7,10 @@ on:
   push:
     branches: [ main, master ]
     tags: "**"
-#  workflow_run:
-#    workflows: [ Staging, Lab ]
-#    types:
-#      - completed
+  workflow_run:
+    workflows: [ bump-version ]
+    types:
+      - completed
 
 permissions:
   contents: read

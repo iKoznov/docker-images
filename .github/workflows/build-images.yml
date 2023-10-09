@@ -6,7 +6,11 @@ on:
     - cron: "*/15 * * * *"
   push:
     branches: [ main, master ]
-    tags:
+    tags: "**"
+#  workflow_run:
+#    workflows: [ Staging, Lab ]
+#    types:
+#      - completed
 
 permissions:
   contents: read

@@ -28,6 +28,7 @@ jobs:
           with-v: true
           dry-run: true
       -
+        continue-on-error: true
         run: |
           echo "${{ steps.tagger.outputs.new-tag }}" > VERSION.txt
           git add .

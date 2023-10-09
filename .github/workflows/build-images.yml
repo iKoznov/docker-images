@@ -5,7 +5,7 @@ on:
 #  schedule:
 #    - cron: "0 0 * * 6"  # At 00:00 on Saturday.
     #- cron: "*/15 * * * *"
-  push:
+  create:
     #branches: [ main, master ]
     tags: "v*"
   # https://stackoverflow.com/questions/60418323/triggering-a-new-workflow-from-another-workflow

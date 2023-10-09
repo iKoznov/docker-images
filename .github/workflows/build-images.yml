@@ -15,6 +15,7 @@ permissions:
 
 jobs:
   build-image:
+    name: Build image
     strategy:
       matrix:
         include:

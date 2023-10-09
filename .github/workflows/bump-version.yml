@@ -14,6 +14,12 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v3
+      -
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
 #      - uses: actions/checkout@v3
 #        with:
 #          fetch-depth: '0'

@@ -36,6 +36,10 @@ jobs:
         include:
           - directory: jupyter
             dockerfile: ubuntu-pybind
+          - directory: jupyter
+            dockerfile: ubuntu-pip
+          - directory: jupyter
+            dockerfile: ubuntu-cling
 
     runs-on: ubuntu-latest
 

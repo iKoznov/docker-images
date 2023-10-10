@@ -15,10 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       -
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-      -
         #uses: anothrNick/github-tag-action@1
         uses: phish108/autotag-action@v1.1.64
         id: tagger
@@ -32,6 +28,8 @@ jobs:
         run: |
           echo "${{ steps.tagger.outputs.new-tag }}" > VERSION.txt
           git add .
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git commit -am "version bump to ${{ steps.tagger.outputs.new-tag }}"
       -
         name: Push changes

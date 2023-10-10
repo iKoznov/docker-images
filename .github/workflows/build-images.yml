@@ -39,7 +39,7 @@ jobs:
           - directory: jupyter
             dockerfile: ubuntu-pip
           - directory: jupyter
-            dockerfile: ubuntu-cling
+            dockerfile: xeus-cling
 
     runs-on: ubuntu-latest
 

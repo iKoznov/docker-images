@@ -6,8 +6,8 @@ COPY requirements.txt /tmp
 COPY requirements-mamba.txt /tmp
 
 RUN mamba install -y -c conda-forge \
-    --file /tmp/requirements-mamba.txt \
-    --file /tmp/requirements.txt \
+        --file /tmp/requirements-mamba.txt \
+        --file /tmp/requirements.txt \
     && mamba clean --all
 
 RUN jupyter labextension disable \

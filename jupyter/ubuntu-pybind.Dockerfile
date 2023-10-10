@@ -42,9 +42,9 @@ COPY requirements-cpp.txt /tmp
 
 RUN . /opt/venv/bin/activate \
     && python -m pip install \
-    -r /tmp/requirements-cpp.txt \
-    -r /tmp/requirements-pip.txt \
-    -r /tmp/requirements.txt \
+        -r /tmp/requirements-cpp.txt \
+        -r /tmp/requirements-pip.txt \
+        -r /tmp/requirements.txt \
     && python -m pip cache remove "*"
 
 RUN jupyter labextension disable "@jupyterlab/apputils-extension:announcements"

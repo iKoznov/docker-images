@@ -23,7 +23,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
     && apt-get install -f -y --no-install-recommends \
-    pypy3 pypy3-dev pypy3-venv build-essential \
+        pypy3 pypy3-dev pypy3-venv build-essential \
     && apt-get clean
 
 ENV VIRTUAL_ENV=/opt/venv
@@ -35,8 +35,8 @@ COPY requirements-pip.txt /tmp
 
 RUN . /opt/venv/bin/activate \
     && pypy3 -m pip install \
-    -r /tmp/requirements-pip.txt \
-    -r /tmp/requirements.txt \
+        -r /tmp/requirements-pip.txt \
+        -r /tmp/requirements.txt \
     && pypy3 -m pip cache remove "*"
 
 RUN jupyter labextension disable "@jupyterlab/apputils-extension:announcements"

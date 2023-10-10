@@ -8,7 +8,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
     && apt-get install -f -y --no-install-recommends \
         software-properties-common gnupg \
-        build-essential libffi-dev
+        build-essential libffi-dev \
+    && apt-get clean
 
 RUN add-apt-repository -y ppa:deadsnakes/ppa \
     && apt-get update \
@@ -16,7 +17,8 @@ RUN add-apt-repository -y ppa:deadsnakes/ppa \
         python${PYTHON_VERSION} \
         python${PYTHON_VERSION}-dev \
         python${PYTHON_VERSION}-venv \
-        python${PYTHON_VERSION}-distutils
+        python${PYTHON_VERSION}-distutils \
+    && apt-get clean
 
 ENV VIRTUAL_ENV=/opt/venv
 RUN python${PYTHON_VERSION} -m venv $VIRTUAL_ENV
@@ -28,6 +30,7 @@ COPY requirements-pip.txt /tmp
 RUN . /opt/venv/bin/activate \
     && python -m pip install \
     -r /tmp/requirements-pip.txt \
-    -r /tmp/requirements.txt
+    -r /tmp/requirements.txt \
+    && python -m pip cache remove "*"
 
 RUN jupyter labextension disable "@jupyterlab/apputils-extension:announcements"

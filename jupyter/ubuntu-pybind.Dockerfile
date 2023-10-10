@@ -9,13 +9,16 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
     && apt-get install -f -y \
         lsb-release software-properties-common gnupg wget \
-        build-essential libffi-dev #libtbb-dev
+        build-essential libffi-dev \
+    && apt-get clean #libtbb-dev
+
 
 RUN wget https://apt.llvm.org/llvm.sh \
     && chmod +x llvm.sh \
     && ./llvm.sh ${CLANG_VERSION} \
     && apt-get install -f -y \
-        clang-tools-${CLANG_VERSION}
+        clang-tools-${CLANG_VERSION} \
+    && apt-get clean
 
 ENV CC=/usr/bin/clang-${CLANG_VERSION}
 ENV CXX=/usr/bin/clang++-${CLANG_VERSION}
@@ -26,7 +29,8 @@ RUN add-apt-repository -y ppa:deadsnakes/ppa \
         python${PYTHON_VERSION} \
         python${PYTHON_VERSION}-dev \
         python${PYTHON_VERSION}-venv \
-        python${PYTHON_VERSION}-distutils
+        python${PYTHON_VERSION}-distutils \
+    && apt-get clean
 
 ENV VIRTUAL_ENV=/opt/venv
 RUN python${PYTHON_VERSION} -m venv $VIRTUAL_ENV
@@ -40,6 +44,7 @@ RUN . /opt/venv/bin/activate \
     && python -m pip install \
     -r /tmp/requirements-cpp.txt \
     -r /tmp/requirements-pip.txt \
-    -r /tmp/requirements.txt
+    -r /tmp/requirements.txt \
+    && python -m pip cache remove "*"
 
 RUN jupyter labextension disable "@jupyterlab/apputils-extension:announcements"

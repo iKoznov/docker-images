@@ -1,14 +1,15 @@
 #FROM continuumio/anaconda3
 #FROM mambaorg/micromamba
-FROM condaforge/mambaforge
+FROM condaforge/mambaforge as ikoznov_jupyter
+
+WORKDIR /tmp
 
 COPY requirements.txt /tmp
 COPY requirements-mamba.txt /tmp
 
 RUN mamba install -y -c conda-forge \
-        --file /tmp/requirements-mamba.txt \
-        --file /tmp/requirements.txt \
-    && mamba clean --all
+    --file /tmp/requirements-mamba.txt \
+    --file /tmp/requirements.txt
 
 RUN jupyter labextension disable \
     "@jupyterlab/apputils-extension:announcements"

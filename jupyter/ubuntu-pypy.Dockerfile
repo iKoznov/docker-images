@@ -17,14 +17,16 @@
 #RUN jupyter labextension disable \
 #    "@jupyterlab/apputils-extension:announcements"
 
-FROM ubuntu:latest
+FROM ubuntu as ikoznov_jupyter
 
 ARG DEBIAN_FRONTEND=noninteractive
+WORKDIR /tmp
 
 RUN apt-get update \
-    && apt-get install -f -y --no-install-recommends \
-        pypy3 pypy3-dev pypy3-venv build-essential \
-    && apt-get clean
+    && apt-get install -y --no-install-recommends \
+    pypy3 pypy3-dev pypy3-venv build-essential \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 ENV VIRTUAL_ENV=/opt/venv
 RUN pypy3 -m venv $VIRTUAL_ENV
@@ -35,8 +37,7 @@ COPY requirements-pip.txt /tmp
 
 RUN . /opt/venv/bin/activate \
     && pypy3 -m pip install \
-        -r /tmp/requirements-pip.txt \
-        -r /tmp/requirements.txt \
-    && pypy3 -m pip cache remove "*"
+    -r /tmp/requirements-pip.txt \
+    -r /tmp/requirements.txt
 
 RUN jupyter labextension disable "@jupyterlab/apputils-extension:announcements"

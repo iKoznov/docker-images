@@ -15,6 +15,16 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+RUN add-apt-repository -y ppa:deadsnakes/ppa \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+        python${PYTHON_VERSION} \
+        python${PYTHON_VERSION}-dev \
+        python${PYTHON_VERSION}-venv \
+        python${PYTHON_VERSION}-distutils \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" \
     && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" \
     && brew --version
@@ -37,16 +47,6 @@ RUN /bin/bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" ${CLANG_VERSION} \
 
 ENV CC=/usr/bin/clang-${CLANG_VERSION}
 ENV CXX=/usr/bin/clang++-${CLANG_VERSION}
-
-RUN add-apt-repository -y ppa:deadsnakes/ppa \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends \
-        python${PYTHON_VERSION} \
-        python${PYTHON_VERSION}-dev \
-        python${PYTHON_VERSION}-venv \
-        python${PYTHON_VERSION}-distutils \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
 
 ENV VIRTUAL_ENV=/opt/venv
 RUN python${PYTHON_VERSION} -m venv $VIRTUAL_ENV

@@ -41,6 +41,7 @@ jobs:
           - directory: jupyter
             dockerfile: xeus-cling
           - directory: asciidoc_jekyll
+          - directory: cmake3-conan1-gcc
 
     runs-on: ubuntu-latest
 

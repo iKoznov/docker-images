@@ -4,7 +4,7 @@ FROM ubuntu as ikoznov_jupyter
 
 ARG PYTHON_VERSION=3.12
 ARG CLANG_VERSION=17
-ENV DEBIAN_FRONTEND=noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 WORKDIR /tmp
 
 RUN apt-get update \
@@ -20,6 +20,8 @@ RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/instal
     && brew --version
 
 ENV PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+ARG HOMEBREW_NO_ANALYTICS=1
+ARG HOMEBREW_NO_AUTO_UPDATE=1
 RUN brew install \
         cmake ninja conan@2 \
         mold ccache \

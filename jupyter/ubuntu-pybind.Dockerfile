@@ -37,7 +37,7 @@ RUN brew install \
         mold ccache \
     && update-alternatives --install /usr/bin/cmake cmake /home/linuxbrew/.linuxbrew/opt/cmake/bin/cmake 1 --force \
     && update-alternatives --install /usr/bin/ctest ctest /home/linuxbrew/.linuxbrew/opt/cmake/bin/ctest 1 --force \
-    && update-alternatives --install /usr/bin/ctest cpack /home/linuxbrew/.linuxbrew/opt/cmake/bin/cpack 1 --force \
+    && update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/opt/cmake/bin/cpack 1 --force \
     && brew cleanup
 
 RUN /bin/bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" ${CLANG_VERSION} \

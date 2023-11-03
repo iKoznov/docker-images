@@ -72,10 +72,11 @@ jobs:
 #          echo ${{ steps.meta.outputs.tags }}
 #          echo ${{ steps.meta.outputs.labels }}
       -
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           context: ${{ matrix.directory }}
           file: ${{ matrix.directory }}/${{ matrix.dockerfile && format('{0}.', matrix.dockerfile) }}Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-to: type=inline

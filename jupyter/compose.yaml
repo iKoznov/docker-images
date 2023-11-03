@@ -1,0 +1,7 @@
+services:
+  jupyter:
+    build:
+      context: .
+      dockerfile: ./ubuntu-pybind.Dockerfile
+      cache_from:
+      - ghcr.io/ikoznov/jupyter/ubuntu-pybind:main

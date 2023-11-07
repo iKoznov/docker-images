@@ -11,7 +11,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         lsb-release software-properties-common gnupg \
         build-essential libffi-dev gdb \
-        wget curl git tree \
+        wget curl git git-lfs tree \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

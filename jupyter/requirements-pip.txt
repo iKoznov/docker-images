@@ -1,3 +1,5 @@
 jupyterlab-theme-solarized-dark
 jupyterlab-unfold
 jupyterlab_execute_time
+
+pytest

@@ -14,6 +14,6 @@ FROM ${BASE_IMAGE}
 COPY chocolatey.config .
 RUN powershell choco install chocolatey.config -y --no-progress
 #RUN powershell choco install msys2 -y --no-progress
-RUN powershell refreshenv
-RUN env
+#RUN powershell refreshenv
+#RUN env
 #RUN mingw64 --version

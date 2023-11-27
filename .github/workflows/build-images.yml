@@ -28,6 +28,7 @@ permissions:
   contents: read
   packages: write
 
+
 jobs:
   linux-images:
     strategy:
@@ -41,6 +42,7 @@ jobs:
             dockerfile: xeus-cling
           - directory: asciidoc_jekyll
           - directory: cmake3-conan1-gcc
+      fail-fast: false
 
     runs-on: ubuntu-latest
 
@@ -81,8 +83,13 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-to: type=inline
 
+
   windows-images:
+    strategy:
+      fail-fast: false
+
     runs-on: windows-latest
+
     steps:
       - uses: actions/checkout@v3
       -

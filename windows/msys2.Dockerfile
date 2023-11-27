@@ -2,10 +2,10 @@
 ARG BASE_IMAGE=amitie10g/msys2:latest
 FROM ${BASE_IMAGE}
 
-ARG CHOCO_URL=https://chocolatey.org/install.ps1
-RUN powershell Set-ExecutionPolicy Bypass -Scope Process -Force; \
- [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Tls,Tls11,Tls12'; \
- iex ((New-Object System.Net.WebClient).DownloadString("$env:CHOCO_URL"))
+#ARG CHOCO_URL=https://chocolatey.org/install.ps1
+#RUN powershell Set-ExecutionPolicy Bypass -Scope Process -Force; \
+# [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Tls,Tls11,Tls12'; \
+# iex ((New-Object System.Net.WebClient).DownloadString("$env:CHOCO_URL"))
 
 # list of visual studio installer componets IDs
 # https://learn.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-community?view=vs-2019#desktop-development-with-c

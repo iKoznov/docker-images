@@ -30,7 +30,7 @@ permissions:
 
 
 jobs:
-  linux-images:
+  linux:
     strategy:
       matrix:
         include:
@@ -84,11 +84,20 @@ jobs:
           cache-to: type=inline
 
 
-  windows-images:
+  windows:
     strategy:
+      runner: [windows-2019, windows-2022]
+      directory: windows
+      include:
+        - dockerfile: chocolatey
+          base: chocolatey/choco:latest-windows
+        - dockerfile: msys2
+          base: amitie10g/msys2:ltsc2019
+        - dockerfile: msys2
+          base: amitie10g/msys2:ltsc2022
       fail-fast: false
 
-    runs-on: windows-2019
+    runs-on: ${{ matrix.runner }}
 
     steps:
       - uses: actions/checkout@v3
@@ -96,9 +105,9 @@ jobs:
         uses: mr-smithers-excellent/docker-build-push@v6
         with:
           image: windows
-          directory: windows
-          dockerfile: windows/Dockerfile
-          #buildArgs: BASE_IMAGE=${{ matrix.base }}
+          directory: ${{ matrix.directory }}
+          dockerfile: windows/${{ matrix.dockerfile }}.Dockerfile
+          buildArgs: BASE_IMAGE=${{ matrix.base }}
           # enableBuildKit: ${{ runner.os != 'Windows' }}
           pushImage: false
           registry: ghcr.io

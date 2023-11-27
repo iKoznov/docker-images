@@ -87,13 +87,18 @@ jobs:
   windows:
     strategy:
       runner: [windows-2019, windows-2022]
-      directory: windows
       include:
-        - dockerfile: chocolatey
+        -
+          directory: windows
+          dockerfile: chocolatey
           base: chocolatey/choco:latest-windows
-        - dockerfile: msys2
+        -
+          directory: windows
+          dockerfile: msys2
           base: amitie10g/msys2:ltsc2019
-        - dockerfile: msys2
+        -
+          directory: windows
+          dockerfile: msys2
           base: amitie10g/msys2:ltsc2022
       fail-fast: false
 

@@ -1,4 +1,5 @@
 #ARG BASE_IMAGE=mcr.microsoft.com/windows/servercore:ltsc2019
+#ARG BASE_IMAGE=amitie10g/msys2:ltsc2019
 ARG BASE_IMAGE=chocolatey/choco:latest-windows
 FROM ${BASE_IMAGE}
 

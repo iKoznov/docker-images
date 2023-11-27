@@ -98,7 +98,7 @@ jobs:
           image: windows
           directory: windows
           dockerfile: windows/Dockerfile
-          buildArgs: BASE_IMAGE=${{ matrix.base }}
+          #buildArgs: BASE_IMAGE=${{ matrix.base }}
           # enableBuildKit: ${{ runner.os != 'Windows' }}
           pushImage: false
           registry: ghcr.io

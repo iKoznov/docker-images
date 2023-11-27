@@ -106,16 +106,6 @@ jobs:
           -
             directory: windows
             dockerfile: msys2
-            base: amitie10g/msys2:ltsc2019
-            runner: windows-2022
-          -
-            directory: windows
-            dockerfile: msys2
-            base: amitie10g/msys2:ltsc2022
-            runner: windows-2019
-          -
-            directory: windows
-            dockerfile: msys2
             base: amitie10g/msys2:ltsc2022
             runner: windows-2022
       fail-fast: false

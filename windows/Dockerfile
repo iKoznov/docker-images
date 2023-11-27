@@ -13,7 +13,7 @@ FROM ${BASE_IMAGE}
 # https://learn.microsoft.com/en-us/visualstudio/install/command-line-parameter-examples?view=vs-2019
 COPY chocolatey.config .
 RUN powershell choco install chocolatey.config -y --no-progress
-RUN #powershell choco install msys2 -y --no-progress
+#RUN powershell choco install msys2 -y --no-progress
 RUN powershell refreshenv
 RUN env
 #RUN mingw64 --version

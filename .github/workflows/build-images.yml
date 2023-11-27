@@ -29,7 +29,7 @@ permissions:
   packages: write
 
 jobs:
-  build:
+  linux-images:
     strategy:
       matrix:
         include:
@@ -80,3 +80,22 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-to: type=inline
+
+  windows-images:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      -
+        uses: mr-smithers-excellent/docker-build-push@v6
+        with:
+          image: windows
+          directory: windows
+          dockerfile: windows/Dockerfile
+          buildArgs: BASE_IMAGE=${{ matrix.base }}
+          # enableBuildKit: ${{ runner.os != 'Windows' }}
+          pushImage: false
+          #registry: ghcr.io
+          #addLatest: true
+          #addTimestamp: true
+          #username: ${{ github.repository_owner }}
+          #password: ${{ secrets.GITHUB_TOKEN }}

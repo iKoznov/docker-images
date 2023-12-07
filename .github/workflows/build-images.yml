@@ -88,16 +88,16 @@ jobs:
     strategy:
       matrix:
         include:
-          -
-            directory: windows
-            dockerfile: chocolatey
-            base: chocolatey/choco:latest-windows
-            runner: windows-2019
-          -
-            directory: windows
-            dockerfile: chocolatey
-            base: chocolatey/choco:latest-windows
-            runner: windows-2022
+#          -
+#            directory: windows
+#            dockerfile: chocolatey
+#            base: chocolatey/choco:latest-windows
+#            runner: windows-2019
+#          -
+#            directory: windows
+#            dockerfile: chocolatey
+#            base: chocolatey/choco:latest-windows
+#            runner: windows-2022
           -
             directory: windows
             dockerfile: msys2

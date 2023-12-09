@@ -13,7 +13,3 @@ pytest
 pyyaml
 jinja2
 mypy
-
-conan
-cmake
-ninja

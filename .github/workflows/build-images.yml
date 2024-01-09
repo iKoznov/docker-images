@@ -41,7 +41,7 @@ jobs:
           - directory: jupyter
             dockerfile: xeus-cling
           - directory: asciidoc_jekyll
-          - directory: cmake3-conan1-gcc
+          #- directory: cmake3-conan1-gcc
       fail-fast: false
 
     runs-on: ubuntu-latest

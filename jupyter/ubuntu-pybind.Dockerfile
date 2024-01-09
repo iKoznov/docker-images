@@ -66,4 +66,4 @@ RUN . /opt/venv/bin/activate \
     && python -m pip cache remove "*"
 
 RUN jupyter labextension disable "@jupyterlab/apputils-extension:announcements"
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/bin/bash", "-c"]

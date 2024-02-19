@@ -3,7 +3,7 @@
 FROM ubuntu as ikoznov_jupyter
 
 ARG PYTHON_VERSION=3.12
-ARG CLANG_VERSION=17
+ARG CLANG_VERSION=18
 ARG DEBIAN_FRONTEND=noninteractive
 WORKDIR /tmp
 
@@ -39,13 +39,12 @@ RUN brew install \
     && update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/opt/cmake/bin/cpack 1 --force \
     && brew cleanup
 
-RUN /bin/bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" ${CLANG_VERSION} \
-    && apt-get install -y --no-install-recommends \
-        clang-tools-${CLANG_VERSION} \
-        lld-${CLANG_VERSION} \
-        lldb-${CLANG_VERSION} \
+RUN /bin/bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" ${CLANG_VERSION} all \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+    #clang-tools-${CLANG_VERSION} \
+    #lld-${CLANG_VERSION} \
+    #lldb-${CLANG_VERSION} \
 
 ENV CC=/usr/bin/clang-${CLANG_VERSION}
 ENV CXX=/usr/bin/clang++-${CLANG_VERSION}

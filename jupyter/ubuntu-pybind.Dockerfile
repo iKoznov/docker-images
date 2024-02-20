@@ -39,6 +39,9 @@ RUN brew install \
     && update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/opt/cmake/bin/cpack 1 --force \
     && brew cleanup
 
+COPY conan_config /tmp/conan_config
+RUN conan --version && ls -a /tmp/conan_config && conan config install /tmp/conan_config/settings.yml -t file
+
 RUN /bin/bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" ${CLANG_VERSION} all \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*

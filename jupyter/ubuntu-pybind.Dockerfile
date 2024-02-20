@@ -40,7 +40,7 @@ RUN brew install \
     && brew cleanup
 
 COPY conan_config /tmp/conan_config
-RUN conan --version && ls -a /tmp/conan_config && conan config install /tmp/conan_config/settings.yml -t file
+RUN conan config install /tmp/conan_config -t dir
 
 RUN /bin/bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" ${CLANG_VERSION} all \
     && apt-get clean \

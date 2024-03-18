@@ -12,6 +12,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         lsb-release software-properties-common gnupg \
         pipx wget curl git git-lfs gdb make \
+        build-essential libffi-dev tree \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
     #build-essential libffi-dev tree
@@ -47,21 +48,18 @@ RUN apt-get update \
 ENV PIPX_HOME="/opt/pipx"
 ENV PIPX_BIN_DIR="/usr/local/bin"
 
-RUN pipx install "cmake>=3.28,<4.0" --include-deps \
-    && cmake --version
-
 RUN pipx install "conan>=2.0,<3.0" --include-deps \
     && conan --version
     #--python python${PYTHON_VERSION}
 
-RUN pipx install "cmake>=3.28,<4.0" --include-deps \
-    && update-alternatives --install /usr/bin/cmake cmake "${PIPX_BIN_DIR}/cmake" 1 --force \
-    && update-alternatives --install /usr/bin/ctest ctest "${PIPX_BIN_DIR}/ctest" 1 --force \
-    && update-alternatives --install /usr/bin/cpack cpack "${PIPX_BIN_DIR}/cpack" 1 --force \
-    && cmake --version
+#RUN pipx install "cmake>=3.28,<4.0" --include-deps \
+#    && update-alternatives --install /usr/bin/cmake cmake "${PIPX_BIN_DIR}/cmake" 1 --force \
+#    && update-alternatives --install /usr/bin/ctest ctest "${PIPX_BIN_DIR}/ctest" 1 --force \
+#    && update-alternatives --install /usr/bin/cpack cpack "${PIPX_BIN_DIR}/cpack" 1 --force \
+#    && cmake --version
 
-RUN pipx install "ninja>=1.11" --include-deps \
-    && ninja --version
+#RUN pipx install "ninja>=1.11" --include-deps \
+#    && ninja --version
 
 #RUN pipx install "mold" --include-deps \
 #    && mold --version
@@ -73,19 +71,19 @@ RUN pipx install "jupyterlab" --include-deps \
     && jupyter labextension disable "@jupyterlab/apputils-extension:announcements" \
     && jupyter --version
 
-#RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" \
-#    && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" \
-#    && brew --version
-#
-#ENV PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-#ARG HOMEBREW_NO_ANALYTICS=1
-#ARG HOMEBREW_NO_AUTO_UPDATE=1
-#RUN brew install \
-#        cmake python@${PYTHON_VERSION} ninja mold ccache \
-#    && update-alternatives --install /usr/bin/cmake cmake /home/linuxbrew/.linuxbrew/opt/cmake/bin/cmake 1 --force \
-#    && update-alternatives --install /usr/bin/ctest ctest /home/linuxbrew/.linuxbrew/opt/cmake/bin/ctest 1 --force \
-#    && update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/opt/cmake/bin/cpack 1 --force \
-#    && brew cleanup
+RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" \
+    && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" \
+    && brew --version
+
+ENV PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+ARG HOMEBREW_NO_ANALYTICS=1
+ARG HOMEBREW_NO_AUTO_UPDATE=1
+RUN brew install \
+        cmake ninja mold ccache \
+    && update-alternatives --install /usr/bin/cmake cmake /home/linuxbrew/.linuxbrew/opt/cmake/bin/cmake 1 --force \
+    && update-alternatives --install /usr/bin/ctest ctest /home/linuxbrew/.linuxbrew/opt/cmake/bin/ctest 1 --force \
+    && update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/opt/cmake/bin/cpack 1 --force \
+    && brew cleanup
 
 ENV VIRTUAL_ENV=/opt/venv
 RUN python${PYTHON_VERSION} -m venv $VIRTUAL_ENV

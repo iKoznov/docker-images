@@ -23,9 +23,9 @@ RUN add-apt-repository -y ppa:deadsnakes/ppa \
         python${PYTHON_VERSION} \
         python${PYTHON_VERSION}-dev \
         python${PYTHON_VERSION}-venv \
-        python${PYTHON_VERSION}-distutils \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+    #python${PYTHON_VERSION}-distutils
 
 RUN /bin/bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" all ${CLANG_VERSION} \
     && apt-get clean \

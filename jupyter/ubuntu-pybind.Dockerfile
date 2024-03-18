@@ -3,7 +3,7 @@
 FROM ubuntu as ikoznov_jupyter
 
 ARG PYTHON_VERSION=3.12
-ARG CLANG_VERSION=18
+ARG CLANG_VERSION=17
 ARG DEBIAN_FRONTEND=noninteractive
 WORKDIR /tmp
 
@@ -39,8 +39,8 @@ RUN brew install \
     && update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/opt/cmake/bin/cpack 1 --force \
     && brew cleanup
 
-COPY conan_config /tmp/conan_config
-RUN conan config install /tmp/conan_config -t dir
+#COPY conan_config /tmp/conan_config
+#RUN conan config install /tmp/conan_config -t dir
 
 RUN /bin/bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" ${CLANG_VERSION} all \
     && apt-get clean \

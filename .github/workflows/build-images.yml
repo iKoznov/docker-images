@@ -28,6 +28,10 @@ permissions:
   contents: read
   packages: write
 
+env:
+  # Enable color output for utils (e.g. pip, conan, cmake, etc.)
+  TERM: ANSI
+  CLICOLOR_FORCE: 1
 
 jobs:
   linux:

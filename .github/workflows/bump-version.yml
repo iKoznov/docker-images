@@ -3,6 +3,11 @@ on:
   push:
     branches: [ main, master ]
 
+env:
+  # Enable color output for utils (e.g. pip, conan, cmake, etc.)
+  TERM: ANSI
+  CLICOLOR_FORCE: 1
+
 concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: false

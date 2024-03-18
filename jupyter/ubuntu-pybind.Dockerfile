@@ -11,19 +11,19 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         lsb-release software-properties-common gnupg \
         build-essential libffi-dev gdb \
-        wget curl git git-lfs tree \
+        pipx wget curl git git-lfs tree \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN add-apt-repository -y ppa:deadsnakes/ppa \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends \
-        python${PYTHON_VERSION} \
-        python${PYTHON_VERSION}-dev \
-        python${PYTHON_VERSION}-venv \
-        python${PYTHON_VERSION}-distutils \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+#RUN add-apt-repository -y ppa:deadsnakes/ppa \
+#    && apt-get update \
+#    && apt-get install -y --no-install-recommends \
+#        python${PYTHON_VERSION} \
+#        python${PYTHON_VERSION}-dev \
+#        python${PYTHON_VERSION}-venv \
+#        python${PYTHON_VERSION}-distutils \
+#    && apt-get clean \
+#    && rm -rf /var/lib/apt/lists/*
 
 RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" \
     && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" \
@@ -33,11 +33,15 @@ ENV PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 ARG HOMEBREW_NO_ANALYTICS=1
 ARG HOMEBREW_NO_AUTO_UPDATE=1
 RUN brew install \
-        cmake conan ninja mold ccache \
+        cmake python@${PYTHON_VERSION} ninja mold ccache \
     && update-alternatives --install /usr/bin/cmake cmake /home/linuxbrew/.linuxbrew/opt/cmake/bin/cmake 1 --force \
     && update-alternatives --install /usr/bin/ctest ctest /home/linuxbrew/.linuxbrew/opt/cmake/bin/ctest 1 --force \
     && update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/opt/cmake/bin/cpack 1 --force \
     && brew cleanup
+
+RUN pipx install --python python${PYTHON_VERSION} "conan>=2.0,<3.0" \
+    && pipx ensurepath \
+    && pipx completions
 
 #COPY conan_config /tmp/conan_config
 #RUN conan config install /tmp/conan_config -t dir
@@ -61,11 +65,11 @@ COPY requirements-pip.txt /tmp
 COPY requirements-cpp.txt /tmp
 
 RUN . /opt/venv/bin/activate \
-    && python -m pip install \
+    && python${PYTHON_VERSION} -m pip install \
         -r /tmp/requirements-cpp.txt \
         -r /tmp/requirements-pip.txt \
         -r /tmp/requirements.txt \
-    && python -m pip cache remove "*"
+    && python${PYTHON_VERSION} -m pip cache remove "*"
 
 RUN jupyter labextension disable "@jupyterlab/apputils-extension:announcements"
 #ENTRYPOINT ["/bin/bash", "-c"]

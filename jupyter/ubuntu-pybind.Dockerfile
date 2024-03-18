@@ -2,7 +2,7 @@
 
 FROM ubuntu as ikoznov_jupyter
 
-ARG PYTHON_VERSION=3.12
+ARG PYTHON_VERSION=3.11
 ARG CLANG_VERSION=17
 ARG DEBIAN_FRONTEND=noninteractive
 WORKDIR /tmp

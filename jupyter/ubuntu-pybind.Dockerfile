@@ -3,8 +3,8 @@
 FROM ubuntu as ikoznov_jupyter
 
 ARG USERNAME=developer
-ARG PYTHON_VERSION=3.11
-ARG CLANG_VERSION=17
+ARG PYTHON_VERSION=3.12
+ARG CLANG_VERSION=18
 ARG DEBIAN_FRONTEND=noninteractive
 #WORKDIR /tmp
 
@@ -50,10 +50,8 @@ ENV PIPX_BIN_DIR="/usr/local/bin"
 RUN pipx install "cmake>=3.28,<4.0" --include-deps \
     && cmake --version
 
-COPY conan_config /tmp/conan_config
 RUN pipx install "conan>=2.0,<3.0" --include-deps \
-    && conan --version \
-    && conan config install /tmp/conan_config -t dir
+    && conan --version
     #--python python${PYTHON_VERSION}
 
 RUN pipx install "cmake>=3.28,<4.0" --include-deps \
@@ -107,5 +105,8 @@ RUN . ${VIRTUAL_ENV}/bin/activate
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 ENV CC="/usr/bin/clang-${CLANG_VERSION}"
 ENV CXX="/usr/bin/clang++-${CLANG_VERSION}"
+
+#COPY conan_config /tmp/conan_config
+#CMD conan config install /tmp/conan_config -t dir
 
 #ENTRYPOINT ["/bin/bash", "-c"]

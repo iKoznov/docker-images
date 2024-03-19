@@ -39,6 +39,9 @@ jobs:
       matrix:
         include:
           - directory: ubuntu
+            dockerfile: ubuntu-base
+          - directory: ubuntu
+            dockerfile: python-clang
           - directory: jupyter
             dockerfile: ubuntu-pybind
           - directory: jupyter

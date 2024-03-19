@@ -3,6 +3,8 @@
 FROM ghcr.io/ikoznov/ubuntu/python-clang:main as ikoznov_jupyter
 
 ARG USERNAME=developer
+ARG PYTHON_VERSION=3.12
+ARG CLANG_VERSION=18
 ARG DEBIAN_FRONTEND=noninteractive
 #WORKDIR /tmp
 

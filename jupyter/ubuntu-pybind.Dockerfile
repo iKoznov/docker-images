@@ -1,6 +1,6 @@
 # https://medium.com/geekculture/creating-docker-image-conda-jupyter-notebook-for-social-scientists-8c8b8b259a9a
 
-FROM ghcr.io/ikoznov/ubuntu/python-clang:main as ikoznov_jupyter
+FROM ghcr.io/ikoznov/ubuntu/python-clang:latest as ikoznov_jupyter
 
 ARG USERNAME=developer
 ARG DEBIAN_FRONTEND=noninteractive

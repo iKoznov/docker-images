@@ -1,6 +1,6 @@
 # https://medium.com/geekculture/creating-docker-image-conda-jupyter-notebook-for-social-scientists-8c8b8b259a9a
 
-FROM ubuntu as ikoznov_jupyter
+FROM ghcr.io/ikoznov/ubuntu:main as ikoznov_jupyter
 
 ARG USERNAME=developer
 ARG PYTHON_VERSION=3.12
@@ -8,15 +8,15 @@ ARG CLANG_VERSION=18
 ARG DEBIAN_FRONTEND=noninteractive
 #WORKDIR /tmp
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        lsb-release software-properties-common gnupg \
-        pipx wget curl git git-lfs gdb make \
-        build-essential libffi-dev tree \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-    #build-essential libffi-dev tree
-    #python3 python3-venv python3-pip
+#RUN apt-get update \
+#    && apt-get install -y --no-install-recommends \
+#        lsb-release software-properties-common gnupg \
+#        pipx wget curl git git-lfs gdb make \
+#        build-essential libffi-dev tree \
+#    && apt-get clean \
+#    && rm -rf /var/lib/apt/lists/*
+#    #build-essential libffi-dev tree
+#    #python3 python3-venv python3-pip
 
 RUN add-apt-repository -y ppa:deadsnakes/ppa \
     && apt-get update \

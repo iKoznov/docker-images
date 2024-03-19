@@ -38,6 +38,7 @@ jobs:
     strategy:
       matrix:
         include:
+          - directory: ubuntu
           - directory: jupyter
             dockerfile: ubuntu-pybind
           - directory: jupyter

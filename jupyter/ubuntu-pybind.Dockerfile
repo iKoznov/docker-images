@@ -103,7 +103,7 @@ RUN brew install  \
     && update-alternatives --install /usr/bin/cmake cmake /home/linuxbrew/.linuxbrew/opt/cmake/bin/cmake 1 --force  \
     && update-alternatives --install /usr/bin/ctest ctest /home/linuxbrew/.linuxbrew/opt/cmake/bin/ctest 1 --force  \
     && update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/opt/cmake/bin/cpack 1 --force  \
-    && brew cleanup
+    && brew cleanup --prune=all
 
 RUN python${MY_PYTHON_VERSION} -m venv ${MY_VIRTUAL_ENV}
 #ENV PATH="${MY_VIRTUAL_ENV}/bin:${PATH}"

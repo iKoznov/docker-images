@@ -96,10 +96,16 @@ RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/instal
 ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
 ARG HOMEBREW_NO_ANALYTICS=1
 ARG HOMEBREW_NO_AUTO_UPDATE=1
-RUN brew install  \
-        python@${MY_PYTHON_VERSION}  \
-        llvm@${MY_CLANG_VERSION}  \
-        cmake ninja mold ccache  \
+RUN brew install llvm@${MY_CLANG_VERSION}  \
+    && brew cleanup --prune=all
+
+RUN brew install swift  \
+    && brew cleanup --prune=all
+
+RUN brew install python@${MY_PYTHON_VERSION}  \
+    && brew cleanup --prune=all
+
+RUN brew install cmake ninja mold ccache  \
     && update-alternatives --install /usr/bin/cmake cmake /home/linuxbrew/.linuxbrew/opt/cmake/bin/cmake 1 --force  \
     && update-alternatives --install /usr/bin/ctest ctest /home/linuxbrew/.linuxbrew/opt/cmake/bin/ctest 1 --force  \
     && update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/opt/cmake/bin/cpack 1 --force  \

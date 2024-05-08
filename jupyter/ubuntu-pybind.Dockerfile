@@ -3,6 +3,11 @@
 #FROM ghcr.io/ikoznov/ubuntu/python-clang:main as ikoznov_jupyter
 FROM ubuntu as ikoznov_jupyter
 
+# TODO: use buildpack base images
+#       https://github.com/devcontainers/images/blob/main/src/base-ubuntu/.devcontainer/Dockerfile
+# ARG VARIANT="noble"
+# FROM buildpack-deps:${VARIANT}-curl
+
 ARG MY_USERNAME=developer
 ARG MY_PYTHON_VERSION=3.12
 ARG MY_CLANG_VERSION=18

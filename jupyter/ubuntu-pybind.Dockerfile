@@ -9,6 +9,7 @@ FROM ubuntu as ikoznov_jupyter
 # FROM buildpack-deps:${VARIANT}-curl
 
 ARG MY_USERNAME=developer
+ARG MY_ADMINUSER=admin
 ARG MY_PYTHON_VERSION=3.12
 ARG MY_CLANG_VERSION=18
 ARG MY_VIRTUAL_ENV=/opt/venv
@@ -96,12 +97,23 @@ RUN pipx install "jupyterlab" --include-deps  \
     && jupyter labextension disable "@jupyterlab/apputils-extension:announcements"  \
     && jupyter --version
 
-ENV PATH="/opt/Homebrew/bin:${PATH}"
+RUN useradd -m ${MY_ADMINUSER} \
+    && usermod -aG sudo ${MY_ADMINUSER} \
+    && echo '${MY_ADMINUSER} ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+RUN mkdir -p /home/linuxbrew/.linuxbrew  \
+    && chown -hR ${MY_ADMINUSER}: /home/linuxbrew
+
+USER ${MY_ADMINUSER}
+ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
 ARG HOMEBREW_NO_ANALYTICS=1
 ARG HOMEBREW_NO_AUTO_UPDATE=1
 
-RUN mkdir /opt/Homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip-components 1 -C /opt/Homebrew
-RUN eval "$(/opt/Homebrew/bin/brew shellenv)"  \
+RUN curl -L https://github.com/Homebrew/brew/tarball/master  \
+    | tar xz --strip-components 1 -C /home/linuxbrew/.linuxbrew
+#    && chown -R linuxbrew /home/linuxbrew/.linuxbrew
+
+RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"  \
     && brew update --force --quiet  \
     && brew --version
 #RUN chmod -R go-w "$(brew --prefix)/share/zsh"
@@ -130,10 +142,13 @@ RUN brew install python@${MY_PYTHON_VERSION}  \
 #&& update-alternatives --install /usr/bin/ctest ctest /home/linuxbrew/.linuxbrew/opt/cmake/bin/ctest 1 --force  \
 #&& update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/opt/cmake/bin/cpack 1 --force  \
 RUN brew install cmake ninja mold ccache  \
-    && update-alternatives --install /usr/bin/cmake cmake /home/linuxbrew/.linuxbrew/bin/cmake 1 --force  \
-    && update-alternatives --install /usr/bin/ctest ctest /home/linuxbrew/.linuxbrew/bin/ctest 1 --force  \
-    && update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/bin/cpack 1 --force  \
     && brew cleanup --prune=all
+
+USER 0
+
+RUN update-alternatives --install /usr/bin/cmake cmake /home/linuxbrew/.linuxbrew/bin/cmake 1 --force  \
+    && update-alternatives --install /usr/bin/ctest ctest /home/linuxbrew/.linuxbrew/bin/ctest 1 --force  \
+    && update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/bin/cpack 1 --force
 
 RUN python${MY_PYTHON_VERSION} -m venv ${MY_VIRTUAL_ENV}
 #ENV PATH="${MY_VIRTUAL_ENV}/bin:${PATH}"

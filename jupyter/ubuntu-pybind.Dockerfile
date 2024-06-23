@@ -96,9 +96,19 @@ RUN pipx install "jupyterlab" --include-deps  \
     && jupyter labextension disable "@jupyterlab/apputils-extension:announcements"  \
     && jupyter --version
 
-RUN DEBIAN_FRONTEND=noninteractive /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"  \
-    && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"  \
+ENV PATH="/opt/Homebrew/bin:${PATH}"
+ARG HOMEBREW_NO_ANALYTICS=1
+ARG HOMEBREW_NO_AUTO_UPDATE=1
+
+RUN mkdir /opt/Homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip-components 1 -C /opt/Homebrew
+RUN eval "$(/opt/Homebrew/bin/brew shellenv)"  \
+    && brew update --force --quiet  \
     && brew --version
+#RUN chmod -R go-w "$(brew --prefix)/share/zsh"
+
+#RUN DEBIAN_FRONTEND=noninteractive /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"  \
+#    && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"  \
+#    && brew --version
 
 #RUN git clone https://github.com/Homebrew/brew ~/.linuxbrew/Homebrew \
 #    && mkdir ~/.linuxbrew/bin \
@@ -106,9 +116,7 @@ RUN DEBIAN_FRONTEND=noninteractive /bin/bash -c "$(curl -fsSL https://raw.github
 #    && eval $(~/.linuxbrew/bin/brew shellenv) \
 #    && brew --version
 
-ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
-ARG HOMEBREW_NO_ANALYTICS=1
-ARG HOMEBREW_NO_AUTO_UPDATE=1
+#ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
 RUN brew install llvm@${MY_CLANG_VERSION}  \
     && brew cleanup --prune=all
 

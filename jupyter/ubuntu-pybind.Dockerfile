@@ -122,8 +122,8 @@ RUN python${MY_PYTHON_VERSION} -m venv ${MY_VIRTUAL_ENV}
 #ENV PATH="${MY_VIRTUAL_ENV}/bin:${PATH}"
 
 COPY requirements-cpp.txt /tmp
+# python -m pip install setuptools
 RUN . ${MY_VIRTUAL_ENV}/bin/activate  \
-    && python -m pip install setuptools  \
     && python -m pip install  \
         -r /tmp/requirements-cpp.txt  \
     && python -m pip cache remove "*"  \

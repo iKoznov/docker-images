@@ -96,9 +96,15 @@ RUN pipx install "jupyterlab" --include-deps  \
     && jupyter labextension disable "@jupyterlab/apputils-extension:announcements"  \
     && jupyter --version
 
-RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"  \
+RUN DEBIAN_FRONTEND=noninteractive /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"  \
     && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"  \
     && brew --version
+
+#RUN git clone https://github.com/Homebrew/brew ~/.linuxbrew/Homebrew \
+#    && mkdir ~/.linuxbrew/bin \
+#    && ln -s ../Homebrew/bin/brew ~/.linuxbrew/bin \
+#    && eval $(~/.linuxbrew/bin/brew shellenv) \
+#    && brew --version
 
 ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
 ARG HOMEBREW_NO_ANALYTICS=1

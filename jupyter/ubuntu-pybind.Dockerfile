@@ -123,10 +123,23 @@ RUN python${MY_PYTHON_VERSION} -m venv ${MY_VIRTUAL_ENV}
 
 COPY requirements-cpp.txt /tmp
 RUN . ${MY_VIRTUAL_ENV}/bin/activate  \
+    && python -m pip install setuptools  \
     && python -m pip install  \
         -r /tmp/requirements-cpp.txt  \
     && python -m pip cache remove "*"  \
     && deactivate
+
+# TODO: integrate into cmake python module testing with asan https://tobywf.com/2021/02/python-ext-asan/
+#RUN git clone --depth 1 "https://github.com/tobywf/python-ext-asan.git" /tmp/python-ext-asan
+#RUN . ${MY_VIRTUAL_ENV}/bin/activate
+#ENV PATH="${MY_VIRTUAL_ENV}/bin:${PATH}"
+#ENV CC="/home/linuxbrew/.linuxbrew/opt/llvm/bin/clang"
+#ENV CXX="/home/linuxbrew/.linuxbrew/opt/llvm/bin/clang++"
+#WORKDIR /tmp/python-ext-asan
+#RUN python setup.py develop
+#    RUN ldconfig -p  \
+#    && LD_PRELOAD="/home/linuxbrew/.linuxbrew/opt/llvm/lib/clang/${MY_CLANG_VERSION}/lib/linux/libclang_rt.asan-x86_64.so:/lib/x86_64-linux-gnu/libstdc++.so.6"  \
+#        python -c "import asan"
 
 RUN useradd -ms /bin/bash ${MY_USERNAME}
 USER ${MY_USERNAME}

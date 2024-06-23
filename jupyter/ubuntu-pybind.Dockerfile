@@ -96,9 +96,9 @@ RUN pipx install "jupyterlab" --include-deps  \
     && jupyter labextension disable "@jupyterlab/apputils-extension:announcements"  \
     && jupyter --version
 
-RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"  \
-    && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"  \
-    && brew --version
+RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+#    && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"  \
+#    && brew --version
 
 ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
 ARG HOMEBREW_NO_ANALYTICS=1
@@ -112,10 +112,13 @@ RUN brew install swift  \
 RUN brew install python@${MY_PYTHON_VERSION}  \
     && brew cleanup --prune=all
 
+#&& update-alternatives --install /usr/bin/cmake cmake /home/linuxbrew/.linuxbrew/opt/cmake/bin/cmake 1 --force  \
+#&& update-alternatives --install /usr/bin/ctest ctest /home/linuxbrew/.linuxbrew/opt/cmake/bin/ctest 1 --force  \
+#&& update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/opt/cmake/bin/cpack 1 --force  \
 RUN brew install cmake ninja mold ccache  \
-    && update-alternatives --install /usr/bin/cmake cmake /home/linuxbrew/.linuxbrew/opt/cmake/bin/cmake 1 --force  \
-    && update-alternatives --install /usr/bin/ctest ctest /home/linuxbrew/.linuxbrew/opt/cmake/bin/ctest 1 --force  \
-    && update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/opt/cmake/bin/cpack 1 --force  \
+    && update-alternatives --install /usr/bin/cmake cmake /home/linuxbrew/.linuxbrew/bin/cmake 1 --force  \
+    && update-alternatives --install /usr/bin/ctest ctest /home/linuxbrew/.linuxbrew/bin/ctest 1 --force  \
+    && update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/bin/cpack 1 --force  \
     && brew cleanup --prune=all
 
 RUN python${MY_PYTHON_VERSION} -m venv ${MY_VIRTUAL_ENV}
@@ -149,8 +152,10 @@ RUN . ${MY_VIRTUAL_ENV}/bin/activate
 ENV PATH="${MY_VIRTUAL_ENV}/bin:${PATH}"
 #ENV CC="/usr/bin/clang-${MY_CLANG_VERSION}"
 #ENV CXX="/usr/bin/clang++-${MY_CLANG_VERSION}"
-ENV CC="/home/linuxbrew/.linuxbrew/opt/llvm/bin/clang"
-ENV CXX="/home/linuxbrew/.linuxbrew/opt/llvm/bin/clang++"
+#ENV CC="/home/linuxbrew/.linuxbrew/opt/llvm/bin/clang"
+#ENV CXX="/home/linuxbrew/.linuxbrew/opt/llvm/bin/clang++"
+ENV CC="/home/linuxbrew/.linuxbrew/bin/clang"
+ENV CXX="/home/linuxbrew/.linuxbrew/bin/clang++"
 
 #COPY conan_config /tmp/conan_config
 #CMD conan config install /tmp/conan_config -t dir

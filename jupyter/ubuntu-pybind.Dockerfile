@@ -176,6 +176,8 @@ RUN . ${MY_VIRTUAL_ENV}/bin/activate  \
 # running github actions with user other than root gets error: 'permission denied'
 # https://github.com/actions/checkout/issues/1575
 # https://github.com/actions/checkout/issues/956
+# Officially, Github anyways says to use root inside the container...
+# https://docs.github.com/en/enterprise-server@3.12/actions/creating-actions/dockerfile-support-for-github-actions#user
 #RUN useradd -ms /bin/bash ${MY_USERNAME}
 #USER ${MY_USERNAME}
 #WORKDIR /home/${MY_USERNAME}

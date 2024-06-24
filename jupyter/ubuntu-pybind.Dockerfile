@@ -8,7 +8,7 @@ FROM ubuntu as ikoznov_jupyter
 # ARG VARIANT="noble"
 # FROM buildpack-deps:${VARIANT}-curl
 
-ARG MY_USERNAME=developer
+#ARG MY_USERNAME=developer
 ARG MY_ADMINUSER=admin
 ARG MY_PYTHON_VERSION=3.12
 ARG MY_CLANG_VERSION=18
@@ -173,9 +173,9 @@ RUN . ${MY_VIRTUAL_ENV}/bin/activate  \
 #    && LD_PRELOAD="/home/linuxbrew/.linuxbrew/opt/llvm/lib/clang/${MY_CLANG_VERSION}/lib/linux/libclang_rt.asan-x86_64.so:/lib/x86_64-linux-gnu/libstdc++.so.6"  \
 #        python -c "import asan"
 
-RUN useradd -ms /bin/bash ${MY_USERNAME}
-USER ${MY_USERNAME}
-WORKDIR /home/${MY_USERNAME}
+#RUN useradd -ms /bin/bash ${MY_USERNAME}
+#USER ${MY_USERNAME}
+#WORKDIR /home/${MY_USERNAME}
 
 RUN . ${MY_VIRTUAL_ENV}/bin/activate
 ENV PATH="${MY_VIRTUAL_ENV}/bin:${PATH}"

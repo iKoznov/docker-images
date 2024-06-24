@@ -173,6 +173,9 @@ RUN . ${MY_VIRTUAL_ENV}/bin/activate  \
 #    && LD_PRELOAD="/home/linuxbrew/.linuxbrew/opt/llvm/lib/clang/${MY_CLANG_VERSION}/lib/linux/libclang_rt.asan-x86_64.so:/lib/x86_64-linux-gnu/libstdc++.so.6"  \
 #        python -c "import asan"
 
+# running github actions with user other than root gets error: 'permission denied'
+# https://github.com/actions/checkout/issues/1575
+# https://github.com/actions/checkout/issues/956
 #RUN useradd -ms /bin/bash ${MY_USERNAME}
 #USER ${MY_USERNAME}
 #WORKDIR /home/${MY_USERNAME}

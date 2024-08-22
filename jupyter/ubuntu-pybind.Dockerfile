@@ -21,7 +21,8 @@ RUN apt-get update  \
     && apt-get install -y --no-install-recommends  \
         lsb-release software-properties-common gnupg  \
         pipx wget curl git git-lfs gdb make  \
-        build-essential libffi-dev tree zsh  \
+        build-essential libffi-dev tree  \
+        zsh sudo  \
     && apt-get autoremove -y  \
     && apt-get clean  \
     && rm -rf /var/lib/apt/lists/*

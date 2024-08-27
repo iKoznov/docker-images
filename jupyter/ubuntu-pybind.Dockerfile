@@ -20,13 +20,12 @@ RUN apt-get update  \
     && apt-get upgrade -y  \
     && apt-get install -y --no-install-recommends  \
         lsb-release software-properties-common gnupg  \
-        pipx wget curl git git-lfs gdb make  \
-        build-essential libffi-dev tree  \
-        zsh sudo  \
+        pipx wget curl git git-lfs gdb  \
+        zsh sudo tree htop mc  \
     && apt-get autoremove -y  \
     && apt-get clean  \
     && rm -rf /var/lib/apt/lists/*
-    #build-essential libffi-dev tree
+    #build-essential libffi-dev
     #python3 python3-venv python3-pip
 
 #RUN add-apt-repository -y ppa:deadsnakes/ppa  \
@@ -139,8 +138,8 @@ RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"  \
 RUN brew install llvm@${MY_CLANG_VERSION}  \
     && brew cleanup --prune=all
 
-RUN brew install swift  \
-    && brew cleanup --prune=all
+#RUN brew install swift  \
+#    && brew cleanup --prune=all
 
 RUN brew install python@${MY_PYTHON_VERSION}  \
     && brew cleanup --prune=all
@@ -148,7 +147,7 @@ RUN brew install python@${MY_PYTHON_VERSION}  \
 #&& update-alternatives --install /usr/bin/cmake cmake /home/linuxbrew/.linuxbrew/opt/cmake/bin/cmake 1 --force  \
 #&& update-alternatives --install /usr/bin/ctest ctest /home/linuxbrew/.linuxbrew/opt/cmake/bin/ctest 1 --force  \
 #&& update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/opt/cmake/bin/cpack 1 --force  \
-RUN brew install cmake ninja mold ccache  \
+RUN brew install cmake ninja make mold ccache  \
     && brew cleanup --prune=all
 
 USER 0

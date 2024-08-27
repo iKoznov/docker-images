@@ -136,19 +136,23 @@ RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"  \
 #    && brew --version
 
 #ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
-RUN brew install llvm@${MY_CLANG_VERSION}  \
-    && brew cleanup --prune=all
-
-#RUN brew install swift  \
-#    && brew cleanup --prune=all
-
-RUN brew install python@${MY_PYTHON_VERSION}  \
-    && brew cleanup --prune=all
 
 #&& update-alternatives --install /usr/bin/cmake cmake /home/linuxbrew/.linuxbrew/opt/cmake/bin/cmake 1 --force  \
 #&& update-alternatives --install /usr/bin/ctest ctest /home/linuxbrew/.linuxbrew/opt/cmake/bin/ctest 1 --force  \
 #&& update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/opt/cmake/bin/cpack 1 --force  \
 RUN brew install cmake ninja make mold ccache  \
+    && brew cleanup --prune=all
+
+RUN brew install python@${MY_PYTHON_VERSION}  \
+    && brew cleanup --prune=all
+
+RUN brew install llvm@${MY_CLANG_VERSION}  \
+    && brew cleanup --prune=all
+
+RUN brew install ldc  \
+    && brew cleanup --prune=all
+
+RUN brew install swift  \
     && brew cleanup --prune=all
 
 USER 0

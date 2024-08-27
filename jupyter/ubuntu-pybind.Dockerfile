@@ -21,6 +21,7 @@ RUN apt-get update  \
     && apt-get install -y --no-install-recommends  \
         lsb-release software-properties-common gnupg  \
         pipx wget curl git git-lfs gdb  \
+        build-essential libffi-dev  \
         zsh sudo tree htop mc  \
     && apt-get autoremove -y  \
     && apt-get clean  \

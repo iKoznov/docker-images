@@ -2,7 +2,8 @@
 
 #FROM ghcr.io/ikoznov/ubuntu/python-clang:main as ikoznov_jupyter
 #FROM debian:latest as ikoznov_jupyter
-FROM debian:stable-slim as ikoznov_jupyter
+#FROM debian:stable-slim as ikoznov_jupyter
+FROM debian:oldstable-slim as ikoznov_jupyter
 #FROM ubuntu:latest as ikoznov_jupyter
 #FROM ubuntu:rolling as ikoznov_jupyter
 

@@ -1,7 +1,8 @@
 # https://medium.com/geekculture/creating-docker-image-conda-jupyter-notebook-for-social-scientists-8c8b8b259a9a
 
 #FROM ghcr.io/ikoznov/ubuntu/python-clang:main as ikoznov_jupyter
-FROM ubuntu as ikoznov_jupyter
+#FROM ubuntu as ikoznov_jupyter
+FROM debian:stable-slim as ikoznov_jupyter
 
 # TODO: use buildpack base images
 #       https://github.com/devcontainers/images/blob/main/src/base-ubuntu/.devcontainer/Dockerfile

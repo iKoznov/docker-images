@@ -24,14 +24,15 @@ RUN apt-get update  \
     && apt-get upgrade -y  \
     && apt-get install -y --no-install-recommends  \
         lsb-release software-properties-common gnupg  \
-        pipx wget curl git git-lfs gdb  \
+        python3-pip python3-venv python3-dev  \
+        wget curl git git-lfs gdb  \
         build-essential libffi-dev  \
         zsh sudo tree htop mc  \
     && apt-get autoremove -y  \
     && apt-get clean  \
     && rm -rf /var/lib/apt/lists/*
-    #build-essential libffi-dev
-    #python3 python3-venv python3-pip
+    #build-essential libffi-dev pipx
+    #python3 python3-venv python3-pip python3-virtualenv
 
 #RUN add-apt-repository -y ppa:deadsnakes/ppa  \
 #    && apt-get update  \
@@ -70,7 +71,6 @@ RUN apt-get update  \
 #RUN ls /usr/lib/LLVMgold.so >&2
 #RUN ls /usr/lib/llvm-${MY_CLANG_VERSION}/lib/LLVMgold.so
 
-
 # https://github.com/pypa/pipx/issues/754#issuecomment-1185923648
 #TODO: RUN pipx ensurepath --global
 #ENV PIPX_GLOBAL_HOME="/opt/pipx"
@@ -78,6 +78,7 @@ RUN apt-get update  \
 #ENV PATH="/root/.local/bin:${PATH}"
 ENV PIPX_HOME="/opt/pipx"
 ENV PIPX_BIN_DIR="/usr/local/bin"
+RUN pip install pipx
 
 RUN pipx install "conan>=2.0,<3.0" --include-deps  \
     && conan --version

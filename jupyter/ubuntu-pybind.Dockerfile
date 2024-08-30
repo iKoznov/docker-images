@@ -4,8 +4,8 @@
 #FROM debian:latest as ikoznov_jupyter
 #FROM debian:stable-slim as ikoznov_jupyter
 #FROM debian:oldstable-slim as ikoznov_jupyter
-FROM ubuntu:latest as ikoznov_jupyter
-#FROM ubuntu:rolling as ikoznov_jupyter
+#FROM ubuntu:latest as ikoznov_jupyter
+FROM ubuntu:rolling as ikoznov_jupyter
 
 # TODO: use buildpack base images
 #       https://github.com/devcontainers/images/blob/main/src/base-ubuntu/.devcontainer/Dockerfile

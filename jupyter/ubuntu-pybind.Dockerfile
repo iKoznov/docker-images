@@ -163,11 +163,11 @@ RUN brew install python@${MY_PYTHON_VERSION}  \
 RUN brew install llvm@${MY_CLANG_VERSION}  \
     && brew cleanup --prune=all
 
-RUN brew install ldc  \
-    && brew cleanup --prune=all
+#RUN brew install ldc  \
+#    && brew cleanup --prune=all
 
-RUN brew install swift  \
-    && brew cleanup --prune=all
+#RUN brew install swift  \
+#    && brew cleanup --prune=all
 
 USER 0
 

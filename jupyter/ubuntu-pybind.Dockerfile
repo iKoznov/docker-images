@@ -78,7 +78,7 @@ RUN apt-get update  \
 #ENV PATH="/root/.local/bin:${PATH}"
 ENV PIPX_HOME="/opt/pipx"
 ENV PIPX_BIN_DIR="/usr/local/bin"
-RUN pip install pipx
+RUN python3 -m pip install pipx
 
 RUN pipx install "conan>=2.0,<3.0" --include-deps  \
     && conan --version

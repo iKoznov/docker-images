@@ -24,9 +24,8 @@ RUN apt-get update  \
     && apt-get upgrade -y  \
     && apt-get install -y --no-install-recommends  \
         lsb-release software-properties-common gnupg  \
-        python3-pip python3-venv python3-dev  \
         wget curl git git-lfs gdb  \
-        build-essential libffi-dev  \
+        pipx build-essential libffi-dev  \
         zsh sudo tree htop mc  \
     && apt-get autoremove -y  \
     && apt-get clean  \
@@ -78,7 +77,17 @@ RUN apt-get update  \
 #ENV PATH="/root/.local/bin:${PATH}"
 ENV PIPX_HOME="/opt/pipx"
 ENV PIPX_BIN_DIR="/usr/local/bin"
-RUN python3 -m pip install pipx
+#RUN if [ "true" = "true" ]; then \
+#        apt-get update;  \
+#    fi
+#        apt-get update  \
+#        && apt-get install -y --no-install-recommends  \
+#            python3-pip python3-venv python3-dev  \
+#        && python3 -m pip install --break-system-packages pipx  \
+#        && apt-get autoremove -y  \
+#        && apt-get clean  \
+#        && rm -rf /var/lib/apt/lists/* \
+#    }
 
 RUN pipx install "conan>=2.0,<3.0" --include-deps  \
     && conan --version

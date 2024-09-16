@@ -215,6 +215,10 @@ ENV PATH="${MY_VIRTUAL_ENV}/bin:${PATH}"
 #ENV CXX="/home/linuxbrew/.linuxbrew/opt/llvm/bin/clang++"
 ENV CC="/home/linuxbrew/.linuxbrew/bin/clang"
 ENV CXX="/home/linuxbrew/.linuxbrew/bin/clang++"
+ENV CONAN_HOME="/root/.conan2"
+#ENV CONAN_USER_HOME="/root"
+ENV CCACHE_DIR="/root/.ccache"
+#ENV SCCACHE_DIR="/root/.sccache"
 
 #COPY conan_config /tmp/conan_config
 #CMD conan config install /tmp/conan_config -t dir

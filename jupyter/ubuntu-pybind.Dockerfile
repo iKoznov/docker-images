@@ -93,11 +93,11 @@ RUN pipx install "conan>=2.0,<2.8" --include-deps  \
     && conan --version
     #--python python${MY_PYTHON_VERSION}
 
-#RUN pipx install "cmake>=3.28,<4.0" --include-deps  \
-#    && update-alternatives --install /usr/bin/cmake cmake "${PIPX_BIN_DIR}/cmake" 1 --force  \
-#    && update-alternatives --install /usr/bin/ctest ctest "${PIPX_BIN_DIR}/ctest" 1 --force  \
-#    && update-alternatives --install /usr/bin/cpack cpack "${PIPX_BIN_DIR}/cpack" 1 --force  \
-#    && cmake --version
+RUN pipx install "cmake>=3.28,<3.31" --include-deps  \
+    && update-alternatives --install /usr/bin/cmake cmake "${PIPX_BIN_DIR}/cmake" 1 --force  \
+    && update-alternatives --install /usr/bin/ctest ctest "${PIPX_BIN_DIR}/ctest" 1 --force  \
+    && update-alternatives --install /usr/bin/cpack cpack "${PIPX_BIN_DIR}/cpack" 1 --force  \
+    && cmake --version
 
 #RUN pipx install "ninja>=1.11" --include-deps  \
 #    && ninja --version
@@ -154,7 +154,7 @@ RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"  \
 #&& update-alternatives --install /usr/bin/cmake cmake /home/linuxbrew/.linuxbrew/opt/cmake/bin/cmake 1 --force  \
 #&& update-alternatives --install /usr/bin/ctest ctest /home/linuxbrew/.linuxbrew/opt/cmake/bin/ctest 1 --force  \
 #&& update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/opt/cmake/bin/cpack 1 --force  \
-RUN brew install cmake ninja make mold ccache  \
+RUN brew install ninja make mold ccache  \
     && brew cleanup --prune=all
 
 RUN brew install python@${MY_PYTHON_VERSION}  \
@@ -171,9 +171,9 @@ RUN brew install swift  \
 
 USER 0
 
-RUN update-alternatives --install /usr/bin/cmake cmake /home/linuxbrew/.linuxbrew/bin/cmake 1 --force  \
-    && update-alternatives --install /usr/bin/ctest ctest /home/linuxbrew/.linuxbrew/bin/ctest 1 --force  \
-    && update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/bin/cpack 1 --force
+#RUN update-alternatives --install /usr/bin/cmake cmake /home/linuxbrew/.linuxbrew/bin/cmake 1 --force  \
+#    && update-alternatives --install /usr/bin/ctest ctest /home/linuxbrew/.linuxbrew/bin/ctest 1 --force  \
+#    && update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/bin/cpack 1 --force
 
 RUN python${MY_PYTHON_VERSION} -m venv ${MY_VIRTUAL_ENV}
 #ENV PATH="${MY_VIRTUAL_ENV}/bin:${PATH}"

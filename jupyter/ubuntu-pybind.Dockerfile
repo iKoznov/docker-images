@@ -89,7 +89,7 @@ ENV PIPX_BIN_DIR="/usr/local/bin"
 #        && rm -rf /var/lib/apt/lists/* \
 #    }
 
-RUN pipx install "conan>=2.0,<2.8" --include-deps  \
+RUN pipx install "conan>=2.0,<2.9" --include-deps  \
     && conan --version
     #--python python${MY_PYTHON_VERSION}
 

@@ -19,12 +19,15 @@ ARG MY_CLANG_VERSION=19
 ARG MY_VIRTUAL_ENV=/opt/venv
 #WORKDIR /tmp
 
+# This is needed to run jetbrains ide with devcontainers / alpine based images
+# git wget unzip bash
+
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update  \
     && apt-get upgrade -y  \
     && apt-get install -y --no-install-recommends  \
         lsb-release software-properties-common gnupg  \
-        wget curl git git-lfs gdb  \
+        wget curl unzip bash git git-lfs gdb  \
         pipx build-essential libffi-dev  \
         zsh sudo tree htop mc  \
     && apt-get autoremove -y  \

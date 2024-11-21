@@ -95,7 +95,7 @@ RUN pipx install "conan>=2.0,<2.8" --include-deps  \
     #--python python${MY_PYTHON_VERSION}
 
 # downgrade cmake because of CMAKE_ROOT error
-RUN pipx install "cmake>=3.28,<3.31" --include-deps  \
+RUN pipx install "cmake>=3.28,<4.0,!=3.31.*" --include-deps  \
     && update-alternatives --install /usr/bin/cmake cmake "${PIPX_BIN_DIR}/cmake" 1 --force  \
     && update-alternatives --install /usr/bin/ctest ctest "${PIPX_BIN_DIR}/ctest" 1 --force  \
     && update-alternatives --install /usr/bin/cpack cpack "${PIPX_BIN_DIR}/cpack" 1 --force  \

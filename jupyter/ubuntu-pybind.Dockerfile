@@ -92,8 +92,7 @@ ENV PIPX_BIN_DIR="/usr/local/bin"
 #        && rm -rf /var/lib/apt/lists/* \
 #    }
 
-# downgrade conan because if EnTT cmake configs install error
-RUN pipx install "conan>=2.0,<2.8" --include-deps  \
+RUN pipx install "conan>=2.0,<3.0" --include-deps  \
     && conan --version
     #--python python${MY_PYTHON_VERSION}
 

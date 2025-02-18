@@ -14,6 +14,7 @@ FROM ubuntu:latest as ikoznov_jupyter
 
 #ARG MY_USERNAME=developer
 ARG MY_ADMINUSER=admin
+#ARG MY_RUBY_VERSION=3.2.7
 ARG MY_PYTHON_VERSION=3.13
 ARG MY_CLANG_VERSION=19
 ARG MY_VIRTUAL_ENV=/opt/venv
@@ -23,37 +24,83 @@ ARG MY_VIRTUAL_ENV=/opt/venv
 # git wget unzip bash
 
 ARG DEBIAN_FRONTEND=noninteractive
+# this allows to donwload "apt-get build-dep" packages
+# RUN sed -i 's/^Types: deb$/Types: deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources \
+# && apt-add-repository -y ppa:rael-gc/rvm  \
 RUN apt-get update  \
-    && apt-get upgrade -y  \
-    && apt-get install -y --no-install-recommends  \
+    && apt-get upgrade -yq  \
+    && apt-get install -yq --no-install-recommends  \
         lsb-release software-properties-common gnupg  \
         wget curl unzip bash git git-lfs gdb  \
-        pipx build-essential libffi-dev  \
-        zsh sudo tree htop mc  \
-    && apt-get autoremove -y  \
-    && apt-get clean  \
-    && rm -rf /var/lib/apt/lists/*
+        pipx build-essential  \
+        zlib1g-dev libffi-dev libssl-dev libreadline-dev sqlite3 libsqlite3-dev  \
+        zsh sudo tree htop mc
+#mold
+#RUN apt-get build-dep -yq  \
+#        ruby-full python3
+
+#RUN apt-get install ruby-full -yq
+#RUN ruby --version && exit 1
+
+#ENV PATH /opt/rbenv/shims:/opt/rbenv/bin:/opt/rbenv/plugins/ruby-build/bin:$PATH
+#RUN git clone --depth 1 https://github.com/rbenv/rbenv.git /opt/rbenv
+#RUN git clone --depth 1 https://github.com/rbenv/ruby-build.git /opt/rbenv/plugins/ruby-build
+#RUN rbenv install ${MY_RUBY_VERSION} || cat /tmp/ruby-build.* || cat $(find /tmp | grep mkmf.log) && exit 1
+
+# Install rbenv
+#RUN git clone https://github.com/sstephenson/rbenv.git /usr/local/rbenv
+#RUN tree /usr/local/rbenv && exit 2
+#RUN echo '# rbenv setup' > /etc/profile.d/rbenv.sh
+#RUN echo 'export RBENV_ROOT=/usr/local/rbenv' >> /etc/profile.d/rbenv.sh
+#RUN echo 'export PATH="$RBENV_ROOT/bin:$PATH"' >> /etc/profile.d/rbenv.sh
+#RUN echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
+#RUN chmod +x /etc/profile.d/rbenv.sh
+
+#RUN curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
+#RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> /root/.bashrc
+#RUN echo 'eval "$(rbenv init -)"' >> /root/.bashrc
+#
+#RUN . /root/.bashrc && rbenv install 3.3.7
+
+#    && apt-get autoremove -yq  \
+#    && apt-get clean  \
+#    && rm -rf /var/lib/apt/lists/*
     #build-essential libffi-dev pipx
     #python3 python3-venv python3-pip python3-virtualenv
+    # Needed by ruby-build
+    # libz-dev libssl-dev libffi-dev libyaml-dev
 
-#RUN add-apt-repository -y ppa:deadsnakes/ppa  \
-#    && apt-get update  \
-#    && apt-get install -y --no-install-recommends  \
-#        python${MY_PYTHON_VERSION}  \
-#        python${MY_PYTHON_VERSION}-dev  \
-#        python${MY_PYTHON_VERSION}-venv  \
+#RUN apt-get install rvm -y && find "/" -type "f" -name "rvm.sh"
+#RUN /usr/share/rvm/scripts/rvm && rvm install ruby-${MY_RUBY_VERSION}
+
+#RUN wget https://cache.ruby-lang.org/pub/ruby/$(shortversion=${MY_RUBY_VERSION%.*} printenv shortversion)/ruby-${MY_RUBY_VERSION}.tar.gz  \
+#    && tar -xzf ruby-${MY_RUBY_VERSION}.tar.gz  \
+#    && cd ruby-${MY_RUBY_VERSION}  \
+#    && ./configure --disable-install-doc  \
+#    && make -j$(nproc)  \
+#    && make install  \
+#    && ruby --version
+
+RUN add-apt-repository -y ppa:deadsnakes/ppa  \
+    && apt-get update  \
+    && apt-get install -y --no-install-recommends  \
+        python${MY_PYTHON_VERSION}  \
+        python${MY_PYTHON_VERSION}-dev  \
+        python${MY_PYTHON_VERSION}-venv
 #    && apt-get clean  \
 #    && rm -rf /var/lib/apt/lists/*
-#    #python${MY_PYTHON_VERSION}-distutils
+    #python${MY_PYTHON_VERSION}-distutils
 
-#RUN /bin/bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" all ${MY_CLANG_VERSION}  \
-#    && apt-get install -y --no-install-recommends  \
-#        clang-tools-${MY_CLANG_VERSION}  \
+RUN /bin/bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" all ${MY_CLANG_VERSION}  \
+    && apt-get install -y --no-install-recommends  \
+        clang-tools-${MY_CLANG_VERSION}  \
+    && update-alternatives --install /usr/bin/clang clang "/usr/bin/clang-${MY_CLANG_VERSION}" 1 --force  \
+    && update-alternatives --install /usr/bin/clang++ clang++ "/usr/bin/clang++-${MY_CLANG_VERSION}" 1 --force
 #    && apt-get clean  \
 #    && rm -rf /var/lib/apt/lists/*
-#        #lld-${MY_CLANG_VERSION}
-#        #lldb-${MY_CLANG_VERSION}
-#        #llvm-${MY_CLANG_VERSION}-linker-tools
+        #lld-${MY_CLANG_VERSION}
+        #lldb-${MY_CLANG_VERSION}
+        #llvm-${MY_CLANG_VERSION}-linker-tools
 
 #RUN apt-get update  \
 #    && apt-get install -y --no-install-recommends  \
@@ -97,14 +144,14 @@ RUN pipx install "conan>=2.0,<3.0" --include-deps  \
     #--python python${MY_PYTHON_VERSION}
 
 # downgrade cmake because of CMAKE_ROOT error
-RUN pipx install "cmake>=3.28,<4.0,!=3.31.*" --include-deps  \
+RUN pipx install "cmake>=3.28,!=3.31.*" --include-deps  \
     && update-alternatives --install /usr/bin/cmake cmake "${PIPX_BIN_DIR}/cmake" 1 --force  \
     && update-alternatives --install /usr/bin/ctest ctest "${PIPX_BIN_DIR}/ctest" 1 --force  \
     && update-alternatives --install /usr/bin/cpack cpack "${PIPX_BIN_DIR}/cpack" 1 --force  \
     && cmake --version
 
-#RUN pipx install "ninja>=1.11" --include-deps  \
-#    && ninja --version
+RUN pipx install "ninja>=1.11" --include-deps  \
+    && ninja --version
 
 #RUN pipx install "mold" --include-deps  \
 #    && mold --version
@@ -127,6 +174,8 @@ USER ${MY_ADMINUSER}
 ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
 ARG HOMEBREW_NO_ANALYTICS=1
 ARG HOMEBREW_NO_AUTO_UPDATE=1
+#ARG HOMEBREW_DEVELOPER=1
+#ARG HOMEBREW_USE_RUBY_FROM_PATH=1
 
 # Maybe install homebrew with install script and rc file
 # https://dev.to/jdxlabs/github-actions-to-deploy-your-terraform-code-50n9
@@ -138,9 +187,9 @@ RUN curl -L https://github.com/Homebrew/brew/tarball/master  \
     | tar xz --strip-components 1 -C /home/linuxbrew/.linuxbrew
 #    && chown -R linuxbrew /home/linuxbrew/.linuxbrew
 
-RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"  \
-    && brew update --force --quiet  \
-    && brew --version
+#RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"  \
+#    && brew update --force --quiet  \
+#    && brew --version
 #RUN chmod -R go-w "$(brew --prefix)/share/zsh"
 
 #RUN DEBIAN_FRONTEND=noninteractive /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"  \
@@ -158,20 +207,43 @@ RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"  \
 #&& update-alternatives --install /usr/bin/cmake cmake /home/linuxbrew/.linuxbrew/opt/cmake/bin/cmake 1 --force  \
 #&& update-alternatives --install /usr/bin/ctest ctest /home/linuxbrew/.linuxbrew/opt/cmake/bin/ctest 1 --force  \
 #&& update-alternatives --install /usr/bin/cpack cpack /home/linuxbrew/.linuxbrew/opt/cmake/bin/cpack 1 --force  \
-RUN brew install ninja make mold ccache  \
-    && brew cleanup --prune=all
 
-RUN brew install python@${MY_PYTHON_VERSION}  \
-    && brew cleanup --prune=all
+#RUN brew install --build-from-source $(brew deps --include-build ninja) ninja
 
-RUN brew install llvm@${MY_CLANG_VERSION}  \
-    && brew cleanup --prune=all
+#RUN brew install --build-from-source  \
+#    mpdecimal ca-certificates openssl@3  \
+#    pkgconf gpatch ncurses readline zlib  \
+#    sqlite xz berkeley-db@5 bzip2 lzip expat  \
+#    libedit libffi unzip python@3.13
+
+#RUN brew install --build-from-source mpdecimal
+#RUN brew install --build-from-source openssl@3
+#RUN brew install --build-from-source pkgconf
+#RUN brew install --build-from-source gpatch
+#RUN brew install --build-from-source ncurses
+#RUN brew install --build-from-source readline
+#RUN brew install --build-from-source zlib
+#RUN brew install --build-from-source sqlite
+#RUN brew install --build-from-source xz
+#RUN brew install --build-from-source berkeley-db@5
+#
+#RUN brew install --build-from-source ninja  \
+#    && brew cleanup --prune=all
+
+#RUN brew install ninja make mold ccache  \
+#    && brew cleanup --prune=all
+
+#RUN brew install --build-from-source python@${MY_PYTHON_VERSION}  \
+#    && brew cleanup --prune=all
+
+#RUN brew install --build-from-source llvm@${MY_CLANG_VERSION}  \
+#    && brew cleanup --prune=all
 
 #RUN brew install ldc  \
 #    && brew cleanup --prune=all
 
-RUN brew install swift  \
-    && brew cleanup --prune=all
+#RUN brew install --build-from-source swift  \
+#    && brew cleanup --prune=all
 
 USER 0
 
@@ -213,12 +285,12 @@ RUN . ${MY_VIRTUAL_ENV}/bin/activate  \
 
 RUN . ${MY_VIRTUAL_ENV}/bin/activate
 ENV PATH="${MY_VIRTUAL_ENV}/bin:${PATH}"
-#ENV CC="/usr/bin/clang-${MY_CLANG_VERSION}"
-#ENV CXX="/usr/bin/clang++-${MY_CLANG_VERSION}"
+ENV CC="/usr/bin/clang-${MY_CLANG_VERSION}"
+ENV CXX="/usr/bin/clang++-${MY_CLANG_VERSION}"
 #ENV CC="/home/linuxbrew/.linuxbrew/opt/llvm/bin/clang"
 #ENV CXX="/home/linuxbrew/.linuxbrew/opt/llvm/bin/clang++"
-ENV CC="/home/linuxbrew/.linuxbrew/bin/clang"
-ENV CXX="/home/linuxbrew/.linuxbrew/bin/clang++"
+#ENV CC="/home/linuxbrew/.linuxbrew/bin/clang"
+#ENV CXX="/home/linuxbrew/.linuxbrew/bin/clang++"
 ENV CONAN_HOME="/root/.conan2"
 #ENV CONAN_USER_HOME="/root"
 ENV CCACHE_DIR="/root/.ccache"

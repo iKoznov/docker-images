@@ -93,7 +93,7 @@ RUN add-apt-repository -y ppa:deadsnakes/ppa  \
 
 RUN /bin/bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" all ${MY_CLANG_VERSION}  \
     && apt-get install -y --no-install-recommends  \
-        clang-tools-${MY_CLANG_VERSION}  \
+        clang-tools-${MY_CLANG_VERSION} libc++-${MY_CLANG_VERSION}-dev  \
     && update-alternatives --install /usr/bin/clang clang "/usr/bin/clang-${MY_CLANG_VERSION}" 1 --force  \
     && update-alternatives --install /usr/bin/clang++ clang++ "/usr/bin/clang++-${MY_CLANG_VERSION}" 1 --force
 #    && apt-get clean  \

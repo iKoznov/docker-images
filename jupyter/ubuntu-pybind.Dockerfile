@@ -120,6 +120,8 @@ RUN /bin/bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" all ${MY_CLANG_VERS
 #RUN ls /usr/lib/LLVMgold.so >&2
 #RUN ls /usr/lib/llvm-${MY_CLANG_VERSION}/lib/LLVMgold.so
 
+#TODO: Try to use https://github.com/astral-sh/setup-uv to install python packages
+
 # https://github.com/pypa/pipx/issues/754#issuecomment-1185923648
 #TODO: RUN pipx ensurepath --global
 #ENV PIPX_GLOBAL_HOME="/opt/pipx"

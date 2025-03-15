@@ -34,8 +34,8 @@ RUN apt-get update  \
         wget curl unzip bash git git-lfs gdb  \
         pipx build-essential  \
         zlib1g-dev libffi-dev libssl-dev libreadline-dev sqlite3 libsqlite3-dev  \
-        zsh sudo tree htop mc
-#mold
+        zsh sudo tree htop mc  \
+        mold
 #RUN apt-get build-dep -yq  \
 #        ruby-full python3
 

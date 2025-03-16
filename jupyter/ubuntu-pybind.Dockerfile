@@ -17,6 +17,7 @@ ARG MY_ADMINUSER=admin
 #ARG MY_RUBY_VERSION=3.2.7
 ARG MY_PYTHON_VERSION=3.13
 ARG MY_CLANG_VERSION=20
+ARG MY_MOLD_VERSION=2.37.1
 ARG MY_VIRTUAL_ENV=/opt/venv
 #WORKDIR /tmp
 
@@ -34,10 +35,20 @@ RUN apt-get update  \
         wget curl unzip bash git git-lfs gdb  \
         pipx build-essential  \
         zlib1g-dev libffi-dev libssl-dev libreadline-dev sqlite3 libsqlite3-dev  \
-        zsh sudo tree htop mc  \
-        mold
+        zsh sudo tree htop mc
+#mold
 #RUN apt-get build-dep -yq  \
 #        ruby-full python3
+
+RUN apkArch="$(dpkg --print-architecture)";  \
+    case "$apkArch" in  \
+        arm64) export ARCH='aarch64' ;;  \
+    esac;  \
+    mkdir /opt/mold;  \
+    wget -q -O - "https://github.com/rui314/mold/releases/download/v${MY_MOLD_VERSION}/mold-${MY_MOLD_VERSION}-${ARCH}-linux.tar.gz"  \
+      | tar -xzf - -C /opt/mold --strip-components 1
+ENV PATH /opt/mold/bin:$PATH
+RUN mold --version
 
 #RUN apt-get install ruby-full -yq
 #RUN ruby --version && exit 1

@@ -43,6 +43,7 @@ RUN apt-get update  \
 RUN apkArch="$(dpkg --print-architecture)";  \
     case "$apkArch" in  \
         arm64) export ARCH='aarch64' ;;  \
+        amd64) export ARCH='x86_64' ;;  \
     esac;  \
     mkdir /opt/mold;  \
     wget -q -O - "https://github.com/rui314/mold/releases/download/v${MY_MOLD_VERSION}/mold-${MY_MOLD_VERSION}-${ARCH}-linux.tar.gz"  \

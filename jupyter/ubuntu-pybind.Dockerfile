@@ -192,6 +192,10 @@ ARG HOMEBREW_NO_AUTO_UPDATE=1
 #ARG HOMEBREW_DEVELOPER=1
 #ARG HOMEBREW_USE_RUBY_FROM_PATH=1
 
+# TODO: linuxbrew arm unsupported
+#       https://github.com/orgs/Homebrew/discussions/3612
+#       https://docs.brew.sh/Homebrew-on-Linux#arm-unsupported
+
 # Maybe install homebrew with install script and rc file
 # https://dev.to/jdxlabs/github-actions-to-deploy-your-terraform-code-50n9
 #   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"

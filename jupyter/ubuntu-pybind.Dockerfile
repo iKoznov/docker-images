@@ -28,14 +28,18 @@ ARG DEBIAN_FRONTEND=noninteractive
 # this allows to donwload "apt-get build-dep" packages
 # RUN sed -i 's/^Types: deb$/Types: deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources \
 # && apt-add-repository -y ppa:rael-gc/rvm  \
-RUN apt-get update  \
+
+# https://docs.docker.com/build/cache/optimize
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked  \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked  \
+    apt-get update  \
     && apt-get upgrade -yq  \
     && apt-get install -yq --no-install-recommends  \
         lsb-release software-properties-common gnupg  \
         wget curl unzip bash git git-lfs gdb  \
         pipx build-essential  \
         zlib1g-dev libffi-dev libssl-dev libreadline-dev sqlite3 libsqlite3-dev  \
-        zsh sudo tree htop mc
+        zsh sudo tree htop mc cmake mold
 #mold
 #RUN apt-get build-dep -yq  \
 #        ruby-full python3
@@ -93,7 +97,9 @@ RUN mold --version
 #    && make install  \
 #    && ruby --version
 
-RUN add-apt-repository -y ppa:deadsnakes/ppa  \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked  \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked  \
+    add-apt-repository -y ppa:deadsnakes/ppa  \
     && apt-get update  \
     && apt-get install -y --no-install-recommends  \
         python${MY_PYTHON_VERSION}  \
@@ -103,7 +109,9 @@ RUN add-apt-repository -y ppa:deadsnakes/ppa  \
 #    && rm -rf /var/lib/apt/lists/*
     #python${MY_PYTHON_VERSION}-distutils
 
-RUN /bin/bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" all ${MY_CLANG_VERSION}  \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked  \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked  \
+    /bin/bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" all ${MY_CLANG_VERSION}  \
     && apt-get install -y --no-install-recommends  \
         clang-tools-${MY_CLANG_VERSION} libc++-${MY_CLANG_VERSION}-dev  \
     && update-alternatives --install /usr/bin/clang clang "/usr/bin/clang-${MY_CLANG_VERSION}" 1 --force  \
@@ -153,28 +161,34 @@ ENV PIPX_BIN_DIR="/usr/local/bin"
 #        && rm -rf /var/lib/apt/lists/* \
 #    }
 
-RUN pipx install "conan>=2.0,<3.0" --include-deps  \
+RUN --mount=type=cache,target=/root/.cache/pip  \
+    pipx install "conan>=2.0,<3.0" --include-deps  \
     && conan --version
     #--python python${MY_PYTHON_VERSION}
 
 # downgrade cmake because of CMAKE_ROOT error
 # pipx install "cmake>=3.28,!=3.31.*,<4.0" --include-deps
-RUN pipx install "cmake>=3.28" --include-deps  \
+RUN --mount=type=cache,target=/root/.cache/pip  \
+    pipx install "cmake>=3.28" --include-deps  \
     && update-alternatives --install /usr/bin/cmake cmake "${PIPX_BIN_DIR}/cmake" 1 --force  \
     && update-alternatives --install /usr/bin/ctest ctest "${PIPX_BIN_DIR}/ctest" 1 --force  \
     && update-alternatives --install /usr/bin/cpack cpack "${PIPX_BIN_DIR}/cpack" 1 --force  \
     && cmake --version
 
-RUN pipx install "ninja>=1.11" --include-deps  \
+RUN --mount=type=cache,target=/root/.cache/pip  \
+    pipx install "ninja>=1.11" --include-deps  \
     && ninja --version
 
-#RUN pipx install "mold" --include-deps  \
+#RUN --mount=type=cache,target=/root/.cache/pip  \
+#    pipx install "mold" --include-deps  \
 #    && mold --version
 
-#RUN pipx install "sccache" --include-deps  \
+#RUN --mount=type=cache,target=/root/.cache/pip  \
+#    pipx install "sccache" --include-deps  \
 #    && sccache --version
 
-RUN pipx install "jupyterlab" --include-deps  \
+RUN --mount=type=cache,target=/root/.cache/pip  \
+    pipx install "jupyterlab" --include-deps  \
     && jupyter labextension disable "@jupyterlab/apputils-extension:announcements"  \
     && jupyter --version
 
@@ -275,7 +289,8 @@ RUN python${MY_PYTHON_VERSION} -m venv ${MY_VIRTUAL_ENV}
 
 COPY requirements-cpp.txt /tmp
 # python -m pip install setuptools
-RUN . ${MY_VIRTUAL_ENV}/bin/activate  \
+RUN --mount=type=cache,target=/root/.cache/pip  \
+    . ${MY_VIRTUAL_ENV}/bin/activate  \
     && python -m pip install  \
         -r /tmp/requirements-cpp.txt  \
     && python -m pip cache remove "*"  \

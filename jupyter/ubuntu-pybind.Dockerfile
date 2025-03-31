@@ -169,7 +169,7 @@ RUN --mount=type=cache,target=/root/.cache/pip  \
 # downgrade cmake because of CMAKE_ROOT error
 # pipx install "cmake>=3.28,!=3.31.*,<4.0" --include-deps
 RUN --mount=type=cache,target=/root/.cache/pip  \
-    pipx install "cmake>=3.28" --include-deps  \
+    pipx install "cmake>=3.28,<4.0" --include-deps  \
     && update-alternatives --install /usr/bin/cmake cmake "${PIPX_BIN_DIR}/cmake" 1 --force  \
     && update-alternatives --install /usr/bin/ctest ctest "${PIPX_BIN_DIR}/ctest" 1 --force  \
     && update-alternatives --install /usr/bin/cpack cpack "${PIPX_BIN_DIR}/cpack" 1 --force  \

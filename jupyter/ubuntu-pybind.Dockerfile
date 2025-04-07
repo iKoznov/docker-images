@@ -17,6 +17,7 @@ ARG MY_ADMINUSER=admin
 #ARG MY_RUBY_VERSION=3.2.7
 ARG MY_PYTHON_VERSION=3.13
 ARG MY_CLANG_VERSION=20
+ARG MY_NINJA_VERSION=1.12.1
 ARG MY_MOLD_VERSION=2.37.1
 ARG MY_VIRTUAL_ENV=/opt/venv
 #WORKDIR /tmp
@@ -43,6 +44,17 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked  \
 #cmake mold ninja-build
 #RUN apt-get build-dep -yq  \
 #        ruby-full python3
+
+RUN apkArch="$(dpkg --print-architecture)";  \
+    case "$apkArch" in  \
+        arm64) export ARCH='-aarch64' ;;  \
+        amd64) export ARCH='' ;;  \
+    esac;  \
+    mkdir /opt/ninja;  \
+    wget -q -O "/tmp/ninja-linux${ARCH}.zip" "https://github.com/ninja-build/ninja/releases/download/v${MY_NINJA_VERSION}/ninja-linux${ARCH}.zip";  \
+    unzip "/tmp/ninja-linux${ARCH}.zip" -d /opt/ninja
+ENV PATH /opt/ninja:$PATH
+RUN ninja --version
 
 RUN apkArch="$(dpkg --print-architecture)";  \
     case "$apkArch" in  \

@@ -187,9 +187,9 @@ RUN --mount=type=cache,target=/root/.cache/pip  \
     && update-alternatives --install /usr/bin/cpack cpack "${PIPX_BIN_DIR}/cpack" 1 --force  \
     && cmake --version
 
-RUN --mount=type=cache,target=/root/.cache/pip  \
-    pipx install "ninja>=1.12.1" --include-deps  \
-    && ninja --version
+#RUN --mount=type=cache,target=/root/.cache/pip  \
+#    pipx install "ninja>=1.12.1" --include-deps  \
+#    && ninja --version
 
 RUN --mount=type=cache,target=/root/.cache/pip  \
     pipx install "meson>=1.7.2" --include-deps  \

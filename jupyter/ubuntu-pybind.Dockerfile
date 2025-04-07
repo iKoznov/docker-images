@@ -38,7 +38,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked  \
     && apt-get install -yq --no-install-recommends  \
         lsb-release software-properties-common gnupg  \
         wget curl unzip bash git git-lfs gdb  \
-        pipx build-essential pkg-config automake  \
+        pipx build-essential pkg-config automake autoconf libtool  \
         zlib1g-dev libffi-dev libssl-dev libreadline-dev sqlite3 libsqlite3-dev  \
         zsh sudo tree htop mc
 #cmake mold ninja-build
@@ -49,6 +49,8 @@ RUN gcc --version
 RUN make --version
 RUN pkg-config --version
 RUN automake --version
+RUN autoconf --version
+RUN libtoolize --version
 
 RUN apkArch="$(dpkg --print-architecture)";  \
     case "$apkArch" in  \

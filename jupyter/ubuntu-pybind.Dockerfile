@@ -176,7 +176,7 @@ RUN --mount=type=cache,target=/root/.cache/pip  \
     && cmake --version
 
 RUN --mount=type=cache,target=/root/.cache/pip  \
-    pipx install "ninja>=1.11" --include-deps  \
+    pipx install "ninja>=1.12.1" --include-deps  \
     && ninja --version
 
 RUN --mount=type=cache,target=/root/.cache/pip  \

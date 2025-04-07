@@ -39,8 +39,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked  \
         wget curl unzip bash git git-lfs gdb  \
         pipx build-essential  \
         zlib1g-dev libffi-dev libssl-dev libreadline-dev sqlite3 libsqlite3-dev  \
-        zsh sudo tree htop mc cmake mold
-#mold
+        zsh sudo tree htop mc
+#cmake mold ninja-build
 #RUN apt-get build-dep -yq  \
 #        ruby-full python3
 

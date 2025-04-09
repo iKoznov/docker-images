@@ -342,6 +342,7 @@ RUN --mount=type=cache,target=/root/.cache/pip  \
 
 RUN . ${MY_VIRTUAL_ENV}/bin/activate
 ENV PATH="${MY_VIRTUAL_ENV}/bin:${PATH}"
+ENV PATH="/opt/ninja:/opt/mold/bin:${PATH}"
 ENV CC="/usr/bin/clang-${MY_CLANG_VERSION}"
 ENV CXX="/usr/bin/clang++-${MY_CLANG_VERSION}"
 #ENV CC="/home/linuxbrew/.linuxbrew/opt/llvm/bin/clang"

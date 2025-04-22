@@ -50,6 +50,7 @@ RUN make --version
 RUN pkg-config --version
 RUN automake --version
 RUN autoconf --version
+RUN autoreconf --version
 RUN libtoolize --version
 
 RUN apkArch="$(dpkg --print-architecture)";  \

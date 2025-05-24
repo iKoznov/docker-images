@@ -18,7 +18,7 @@ ARG MY_ADMINUSER=admin
 ARG MY_PYTHON_VERSION=3.13
 ARG MY_CLANG_VERSION=20
 ARG MY_NINJA_VERSION=1.12.1
-ARG MY_MOLD_VERSION=2.37.1
+ARG MY_MOLD_VERSION=2.39.1
 ARG MY_VIRTUAL_ENV=/opt/venv
 #WORKDIR /tmp
 
@@ -33,14 +33,25 @@ ARG DEBIAN_FRONTEND=noninteractive
 # https://docs.docker.com/build/cache/optimize
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked  \
     --mount=type=cache,target=/var/lib/apt,sharing=locked  \
-    apt-get update  \
-    && apt-get upgrade -yq  \
-    && apt-get install -yq --no-install-recommends  \
+    apt-get update;  \
+    apt-get upgrade -yq;  \
+    apt-get install -yq --no-install-recommends  \
         lsb-release software-properties-common gnupg  \
         wget curl unzip bash git git-lfs gdb  \
         pipx build-essential pkg-config automake autoconf libtool  \
         zlib1g-dev libffi-dev libssl-dev libreadline-dev sqlite3 libsqlite3-dev  \
-        zsh sudo tree htop mc
+        zsh sudo tree htop mc  \
+        libgl-dev libgl1-mesa-dev  \
+        libx11-xcb-dev libfontenc-dev libice-dev libsm-dev libxaw7-dev \
+        libxcomposite-dev libxcursor-dev libxdamage-dev libxext-dev  \
+        libxfixes-dev libxi-dev libxinerama-dev libxkbfile-dev libxmu-dev libxmuu-dev  \
+        libxpm-dev libxrandr-dev libxrender-dev libxres-dev libxss-dev libxt-dev  \
+        libxtst-dev libxv-dev libxxf86vm-dev libxcb-glx0-dev libxcb-render0-dev libxcb-render-util0-dev  \
+        libxcb-xkb-dev libxcb-icccm4-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-randr0-dev  \
+        libxcb-shape0-dev libxcb-sync-dev libxcb-xfixes0-dev libxcb-xinerama0-dev libxcb-dri3-dev  \
+        uuid-dev libxcb-cursor-dev libxcb-dri2-0-dev libxcb-dri3-dev  \
+        libxcb-present-dev libxcb-composite0-dev libxcb-ewmh-dev libxcb-res0-dev  \
+        libxcb-util-dev libxcb-util0-dev
 #cmake mold ninja-build
 #RUN apt-get build-dep -yq  \
 #        ruby-full python3

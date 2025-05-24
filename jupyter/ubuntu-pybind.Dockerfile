@@ -41,7 +41,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked  \
         pipx build-essential pkg-config automake autoconf libtool  \
         zlib1g-dev libffi-dev libssl-dev libreadline-dev sqlite3 libsqlite3-dev  \
         zsh sudo tree htop mc  \
-        libgl-dev libgl1-mesa-dev  \
+        libudev libgl-dev libgl1-mesa-dev  \
         libx11-xcb-dev libfontenc-dev libice-dev libsm-dev libxaw7-dev \
         libxcomposite-dev libxcursor-dev libxdamage-dev libxext-dev  \
         libxfixes-dev libxi-dev libxinerama-dev libxkbfile-dev libxmu-dev libxmuu-dev  \

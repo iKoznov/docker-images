@@ -45,6 +45,8 @@ jobs:
           - directory: jupyter
             dockerfile: ubuntu-pybind
           - directory: jupyter
+            dockerfile: arch
+          - directory: jupyter
             dockerfile: ubuntu-pip
           - directory: jupyter
             dockerfile: xeus-cling

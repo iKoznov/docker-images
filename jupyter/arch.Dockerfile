@@ -14,13 +14,15 @@ RUN git clone https://aur.archlinux.org/yay.git && \
 RUN yay -S --noconfirm clang lld llvm llvm-libs llvm-tools libc++
 USER root
 
+RUN clang --version
+
 RUN pacman -Syu --noconfirm  \
     cmake ninja make  \
     gdb lldb mold  \
     git-lfs curl wget
     #gcc clang libc++ mold
 
-RUN clang --version
+RUN gcc --version
 RUN cmake --version
 RUN ninja --version
 RUN mold --version
@@ -37,10 +39,8 @@ RUN libtoolize --version
 RUN pacman -Syu --noconfirm  \
     python-pipx &&  \
     pipx ensurepath --global
-
 RUN pipx install --global  \
     conan
-
 RUN conan --version
 
 RUN pacman -Syu --noconfirm  \

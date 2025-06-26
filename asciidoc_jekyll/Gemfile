@@ -11,11 +11,7 @@ source "https://rubygems.org"
 gem "jekyll"
 
 # This is the default theme for new Jekyll sites. You may change this to anything you like.
-if ENV['UNINAV_GEMS']
-  gem "minima", path: ENV['UNINAV_GEMS'] + '/minima'
-else
-  gem "minima", github: "jekyll/minima"
-end
+gem "minima", github: "jekyll/minima"
 
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and
 # uncomment the line below. To upgrade, run `bundle update github-pages`.
@@ -29,9 +25,9 @@ group :jekyll_plugins do
   gem "jekyll-asciidoc"
   #gem "jekyll-remote-theme"
   #gem 'jekyll-typogrify'
-  #gem 'jekyll-analytics' # included in minima
-  #gem "jekyll-feed" # included in minima
-  #gem 'jekyll-seo-tag' # included in minima
+  gem 'jekyll-analytics' # included in minima
+  gem "jekyll-feed" # included in minima
+  gem 'jekyll-seo-tag' # included in minima
   #gem "jekyll-archives"
 end
 

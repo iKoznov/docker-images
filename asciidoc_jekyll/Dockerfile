@@ -1,8 +1,7 @@
-FROM ubuntu:latest
+FROM ubuntu
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update \
-    && apt-get -f -y upgrade
+RUN apt-get update
 
 # texlive is needed for beautiful TikZ pictures.
 # And it is installed first because it's large.

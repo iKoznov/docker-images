@@ -26,8 +26,8 @@ RUN apt-get -f -y --no-install-recommends install \
 #RUN npm install --global yarn
 #RUN yarn global add mermaid.cli
 
-RUN apt-get -f -y --no-install-recommends install \
-    nodejs npm
+#RUN apt-get -f -y --no-install-recommends install \
+#    nodejs npm
 
 #RUN apt-get -f -y --no-install-recommends install \
 #    curl wget gnupg ca-certificates
@@ -36,10 +36,7 @@ RUN apt-get -f -y --no-install-recommends install \
 #    && npm install -g npm@latest
 
 # Install Mermaid CLI globally
-RUN npm install -g @mermaid-js/mermaid-cli
-
-# Verify installation
-RUN mmdc --version
+#RUN npm install -g @mermaid-js/mermaid-cli
 
 RUN gem install --no-document \
     asciidoctor \
@@ -57,8 +54,8 @@ RUN echo "TEXMFHOME=/texmf" >> /etc/texmf/texmf.d/00debian.cnf \
 RUN apt-get -f -y --no-install-recommends install \
     ruby-dev bundler build-essential
 
-ENV MY_GEMS=/gems
+ENV MY_GEMS=/opt/gems
 RUN mkdir -p "$MY_GEMS" && cd "$MY_GEMS" \
     && git clone https://github.com/jekyll/minima.git --depth 1
 COPY Gemfile /tmp/
-RUN cd /tmp/ && bundle install
+RUN cd /tmp/ && bundle install && rm -rf /tmp/*

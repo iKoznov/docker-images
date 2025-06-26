@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "bundler"
+# gem "bundler"
 
 # Hello! This is where you manage which Jekyll version is used to run.
 # When you want to use a different version, change it below, save the
@@ -25,6 +25,7 @@ gem 'jekyll-sitemap'
 group :jekyll_plugins do
   gem 'jekyll-postfiles'
   gem 'asciidoctor-diagram'
+  gem 'asciidoctor-diagram-plantuml'
   gem "jekyll-asciidoc"
   #gem "jekyll-remote-theme"
   #gem 'jekyll-typogrify'

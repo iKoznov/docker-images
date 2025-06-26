@@ -1,11 +1,7 @@
-# Build image:
-#   docker build -t uninav/build_docs:latest -f docs.Dockerfile .
-
 FROM ubuntu as ikoznov_jekyll
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update \
-    && apt-get -f -y upgrade
+RUN apt-get update
 
 # texlive is needed for beautiful TikZ pictures.
 # And it is installed first because it's large.
@@ -18,7 +14,6 @@ RUN apt-get -f -y --no-install-recommends install \
     python3 python3-pip \
     ruby rubygems \
     default-jre \
-    nodejs npm \
     git git-lfs
 
 RUN apt-get -f -y --no-install-recommends install \
@@ -30,6 +25,21 @@ RUN apt-get -f -y --no-install-recommends install \
 #RUN npm install -g mermaid.cli --unsafe-perm=true --allow-root
 #RUN npm install --global yarn
 #RUN yarn global add mermaid.cli
+
+RUN apt-get -f -y --no-install-recommends install \
+    nodejs npm
+
+#RUN apt-get -f -y --no-install-recommends install \
+#    curl wget gnupg ca-certificates
+#RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
+#    && apt-get install -y nodejs \
+#    && npm install -g npm@latest
+
+# Install Mermaid CLI globally
+RUN npm install -g @mermaid-js/mermaid-cli
+
+# Verify installation
+RUN mmdc --version
 
 RUN gem install --no-document \
     asciidoctor \
@@ -47,8 +57,8 @@ RUN echo "TEXMFHOME=/texmf" >> /etc/texmf/texmf.d/00debian.cnf \
 RUN apt-get -f -y --no-install-recommends install \
     ruby-dev bundler build-essential
 
-ENV UNINAV_GEMS=/gems
-RUN mkdir -p "$UNINAV_GEMS" && cd "$UNINAV_GEMS" \
+ENV MY_GEMS=/gems
+RUN mkdir -p "$MY_GEMS" && cd "$MY_GEMS" \
     && git clone https://github.com/jekyll/minima.git --depth 1
 COPY Gemfile /tmp/
 RUN cd /tmp/ && bundle install

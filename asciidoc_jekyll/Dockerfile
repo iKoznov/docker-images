@@ -1,7 +1,11 @@
-FROM ubuntu
+# Build image:
+#   docker build -t uninav/build_docs:latest -f docs.Dockerfile .
+
+FROM ubuntu as ikoznov_jekyll
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update
+RUN apt-get update \
+    && apt-get -f -y upgrade
 
 # texlive is needed for beautiful TikZ pictures.
 # And it is installed first because it's large.

@@ -38,26 +38,26 @@ jobs:
     strategy:
       matrix:
         include:
-#          - directory: ubuntu
-#            dockerfile: ubuntu-base
-#          - directory: ubuntu
-#            dockerfile: python-clang
-#          - directory: jupyter
-#            dockerfile: ubuntu-pybind
-#          - directory: jupyter
-#            dockerfile: arch
-#          - directory: jupyter
-#            dockerfile: fedora
-#          - directory: jupyter
-#            dockerfile: ubuntu-pip
-#          - directory: jupyter
-#            dockerfile: xeus-cling
+          - directory: ubuntu
+            dockerfile: ubuntu-base
+          - directory: ubuntu
+            dockerfile: python-clang
+          - directory: jupyter
+            dockerfile: ubuntu-pybind
+          - directory: jupyter
+            dockerfile: arch
+          - directory: jupyter
+            dockerfile: fedora
+          - directory: jupyter
+            dockerfile: ubuntu-pip
+          - directory: jupyter
+            dockerfile: xeus-cling
           - directory: asciidoc_jekyll
             cpu: x86_64
           #- directory: cmake3-conan1-gcc
       fail-fast: false
 
-    runs-on: ubuntu-24.04
+    runs-on: ${{ format('ubuntu-24.04{0}', !matrix.cpu && '-arm' || '') }}
 
     steps:
       - uses: actions/checkout@v4

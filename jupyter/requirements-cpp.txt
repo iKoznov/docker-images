@@ -1,3 +1,4 @@
 nanobind
 creload
 pytest
+requests

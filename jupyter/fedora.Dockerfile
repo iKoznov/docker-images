@@ -1,6 +1,8 @@
 # Start with base Fedora image
 FROM fedora:latest as ikoznov_fedora
 
+ARG MY_VIRTUAL_ENV=/opt/venv
+
 # Update the system and install Clang
 RUN dnf update -y && \
     dnf install -y \
@@ -24,7 +26,8 @@ RUN mold --version
 RUN dnf update -y && \
     dnf install -y \
         pkgconf autoconf automake libtoolize  \
-        perl sed awk
+        perl sed awk  \
+        python3 ping
 
 RUN pkg-config --version
 RUN automake --version
@@ -57,5 +60,15 @@ RUN dnf update -y && \
         xcb-util-wm-devel xcb-util-image-devel xcb-util-keysyms-devel xcb-util-renderutil-devel  \
         libXdamage-devel libXxf86vm-devel libXv-devel xcb-util-devel libuuid-devel xcb-util-cursor-devel
 
+RUN python3 -m venv ${MY_VIRTUAL_ENV}
+
+COPY requirements-cpp.txt /tmp
+RUN . ${MY_VIRTUAL_ENV}/bin/activate  \
+    && python -m pip install  \
+        -r /tmp/requirements-cpp.txt  \
+    && python -m pip cache remove "*"  \
+    && deactivate
+
+ENV PATH="${MY_VIRTUAL_ENV}/bin:${PATH}"
 ENV CC="/usr/bin/clang"
 ENV CXX="/usr/bin/clang++"

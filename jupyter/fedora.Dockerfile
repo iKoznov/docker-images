@@ -26,14 +26,21 @@ RUN mold --version
 RUN dnf update -y && \
     dnf install -y \
         pkgconf autoconf automake libtoolize  \
-        perl sed awk  \
-        python3 ping
+        perl sed awk
 
 RUN pkg-config --version
 RUN automake --version
 RUN autoconf --version
 RUN autoreconf --version
 RUN libtoolize --version
+
+RUN dnf update -y && \
+    dnf install -y \
+        python3 ping nmap nmap-ncat
+
+RUN python3 --version
+RUN nmap --version
+RUN nc --version
 
 ENV PIPX_BIN_DIR="/usr/local/bin"
 RUN dnf update -y && \

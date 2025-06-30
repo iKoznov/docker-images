@@ -52,6 +52,13 @@ RUN ln -sf "${PIPX_BIN_DIR}/ctest" /usr/bin/ctest
 RUN ln -sf "${PIPX_BIN_DIR}/cpack" /usr/bin/cpack
 RUN cmake --version
 
+RUN pipx install --global  \
+    "supervisor" --include-deps
+RUN supervisord --version
+
+RUN pipx install --global  \
+    "superlance" --include-deps
+
 RUN dnf update -y && \
     dnf install -y \
         systemd-devel libglvnd-devel libfontenc-devel \

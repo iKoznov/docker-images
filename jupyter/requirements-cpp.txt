@@ -1,4 +1,6 @@
 nanobind
 creload
 pytest
+pytest-asyncio
 requests
+httpx

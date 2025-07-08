@@ -2,6 +2,7 @@ nanobind
 creload
 pytest
 pytest-asyncio
-pytest-xdist
+pytest-asyncio-concurrent
+#pytest-xdist
 requests
 httpx

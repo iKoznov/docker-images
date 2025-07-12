@@ -86,15 +86,27 @@ jobs:
 #        run: |
 #          echo ${{ steps.meta.outputs.tags }}
 #          echo ${{ steps.meta.outputs.labels }}
+#      -
+#        uses: docker/build-push-action@v6
+#        with:
+#          context: ${{ matrix.directory }}
+#          file: ${{ matrix.directory }}/${{ matrix.dockerfile && format('{0}.', matrix.dockerfile) }}Dockerfile
+#          push: ${{ github.event_name != 'pull_request' }}
+#          tags: ${{ steps.meta.outputs.tags }}
+#          labels: ${{ steps.meta.outputs.labels }}
+#          cache-to: type=inline
       -
-        uses: docker/build-push-action@v6
+        uses: mr-smithers-excellent/docker-build-push@v6
         with:
-          context: ${{ matrix.directory }}
-          file: ${{ matrix.directory }}/${{ matrix.dockerfile && format('{0}.', matrix.dockerfile) }}Dockerfile
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-to: type=inline
+          image: ${{ matrix.dockerfile || matrix.directory }}
+          directory: ${{ matrix.directory }}
+          dockerfile: ${{ matrix.directory }}/${{ matrix.dockerfile && format('{0}.', matrix.dockerfile) }}Dockerfile
+          pushImage: ${{ github.event_name != 'pull_request' }}
+          multiPlatform: true
+          platform: linux/amd64,linux/arm64,linux/arm/v7
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
 
   windows:

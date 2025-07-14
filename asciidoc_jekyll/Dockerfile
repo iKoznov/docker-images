@@ -7,16 +7,19 @@ RUN apt-get update
 # And it is installed first because it's large.
 # So it is faster to build Dockerfile with locall changes -
 # docker caches this step and do not rerun it.
-RUN apt-get -f -y --no-install-recommends install \
+RUN apt-get -f -y install \
     texlive-latex-extra
 
-RUN apt-get -f -y --no-install-recommends install \
+RUN apt-get -f -y install \
     python3 python3-pip \
     ruby rubygems \
     default-jre \
-    git git-lfs
+    git
 
-RUN apt-get -f -y --no-install-recommends install \
+RUN apt-get -f -y install \
+    git-lfs
+
+RUN apt-get -f -y install \
     graphviz \
     pdf2svg
 
@@ -26,10 +29,10 @@ RUN apt-get -f -y --no-install-recommends install \
 #RUN npm install --global yarn
 #RUN yarn global add mermaid.cli
 
-#RUN apt-get -f -y --no-install-recommends install \
+#RUN apt-get -f -y install \
 #    nodejs npm
 
-#RUN apt-get -f -y --no-install-recommends install \
+#RUN apt-get -f -y install \
 #    curl wget gnupg ca-certificates
 #RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
 #    && apt-get install -y nodejs \
@@ -51,7 +54,7 @@ RUN echo "TEXMFHOME=/texmf" >> /etc/texmf/texmf.d/00debian.cnf \
     && git clone https://github.com/Jubobs/gitdags.git --depth 1 \
     && kpsewhich gitdags.sty
 
-RUN apt-get -f -y --no-install-recommends install \
+RUN apt-get -f -y install \
     ruby-dev bundler build-essential
 
 ENV MY_GEMS=/opt/gems

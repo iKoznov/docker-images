@@ -110,7 +110,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          tags: latest,${{ github.ref_name }}
+          tags: ${{ github.ref_name }}
+          appendMode: true
+          addLatest: true
 
 
   windows:

@@ -24,6 +24,7 @@ gem "minimal-mistakes-jekyll"
 # If you have any plugins, put them here!
 gem 'jekyll-sitemap'
 #group :jekyll_plugins do
+    gem 'jekyll-minifier'
     gem 'jekyll-paginate-v2'
     gem 'jekyll-postfiles'
     gem 'asciidoctor-diagram'

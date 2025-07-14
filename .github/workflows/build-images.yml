@@ -101,7 +101,7 @@ jobs:
       -
         uses: mr-smithers-excellent/docker-build-push@v6
         with:
-          image: ${{ matrix.dockerfile || matrix.directory }}
+          image: ${{ matrix.dockerfile }}
           directory: ${{ matrix.directory }}
           dockerfile: ${{ matrix.directory }}/${{ matrix.dockerfile && format('{0}.', matrix.dockerfile) }}Dockerfile
           pushImage: ${{ github.event_name != 'pull_request' }}

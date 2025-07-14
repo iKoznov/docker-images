@@ -25,8 +25,8 @@ RUN dnf install -y \
 #RUN npm install --global yarn
 #RUN yarn global add mermaid.cli
 
-#RUN apt-get -f -y install \
-#    nodejs npm
+RUN dnf install -y \
+    nodejs npm
 
 #RUN apt-get -f -y install \
 #    curl wget gnupg ca-certificates

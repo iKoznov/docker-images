@@ -27,6 +27,7 @@ gem 'jekyll-sitemap'
     gem 'jekyll-minifier'
     gem 'jekyll-paginate-v2'
     gem 'jekyll-postfiles'
+    gem 'asciidoctor-rouge'
     gem 'asciidoctor-diagram'
     gem 'asciidoctor-diagram-plantuml'
     gem "jekyll-asciidoc"

@@ -106,6 +106,8 @@ jobs:
           dockerfile: ${{ matrix.directory }}/${{ matrix.dockerfile && format('{0}.', matrix.dockerfile) }}Dockerfile
           pushImage: ${{ github.event_name != 'pull_request' }}
           multiPlatform: true
+          # TODO: try to speedup build for multiple platforms by distributing across multiple runners
+          #       https://docs.docker.com/build/ci/github-actions/multi-platform/#distribute-build-across-multiple-runners
           platform: linux/amd64,linux/arm64
           registry: ghcr.io
           username: ${{ github.repository_owner }}

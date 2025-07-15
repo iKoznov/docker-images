@@ -12,6 +12,7 @@ source "https://rubygems.org"
 # Happy Jekylling!
 # gem "kramdown-parser-gfm"
 gem "jekyll"
+gem 'pygments.rb'
 
 # This is the default theme for new Jekyll sites. You may change this to anything you like.
 # gem "minima", github: "jekyll/minima"

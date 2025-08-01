@@ -37,7 +37,7 @@ RUN libtoolize --version
 RUN dnf update -y && \
     dnf install -y \
         python3 ping nmap nmap-ncat \
-        openssl-devel
+        python3-devel openssl-devel
 
 RUN python3 --version
 RUN nmap --version

@@ -17,7 +17,7 @@ RUN dnf update -y && \
     dnf install -y \
         ninja make  \
         gdb lldb mold  \
-        git-lfs curl wget  \
+        git git-lfs curl wget  \
     && dnf clean all
 
 RUN ninja --version

@@ -14,6 +14,11 @@ RUN dnf update -y && \
 
 RUN clang --version
 
+RUN dnf install -y \
+    swift-lang
+
+RUN swift --version
+
 RUN dnf update -y && \
     dnf install -y \
         ninja make  \

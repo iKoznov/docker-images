@@ -40,7 +40,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked  \
         wget curl unzip bash git git-lfs gdb  \
         pipx build-essential pkg-config automake autoconf libtool  \
         zlib1g-dev libffi-dev libssl-dev libreadline-dev sqlite3 libsqlite3-dev  \
-        zsh sudo tree htop mc  \
+        zsh sudo tree htop mc nmap netcat-traditional  \
         libudev-dev libgl-dev libgl1-mesa-dev  \
         libx11-xcb-dev libfontenc-dev libice-dev libsm-dev libxaw7-dev \
         libxcomposite-dev libxcursor-dev libxdamage-dev libxext-dev  \
@@ -227,6 +227,13 @@ RUN --mount=type=cache,target=/root/.cache/pip  \
 #RUN --mount=type=cache,target=/root/.cache/pip  \
 #    pipx install "sccache" --include-deps  \
 #    && sccache --version
+
+RUN pipx install --global  \
+    "supervisor" --include-deps
+RUN supervisord --version
+
+RUN pipx install --global  \
+    "superlance" --include-deps
 
 RUN --mount=type=cache,target=/root/.cache/pip  \
     pipx install "jupyterlab" --include-deps  \

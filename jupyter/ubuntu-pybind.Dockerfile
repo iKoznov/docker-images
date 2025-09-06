@@ -66,13 +66,13 @@ RUN libtoolize --version
 
 RUN apkArch="$(dpkg --print-architecture)";  \
     case "$apkArch" in  \
-        arm64) export ARCH='-aarch64' ;;  \
-        amd64) export ARCH='' ;;  \
+        arm64) export FILENAME='ninja-linux-aarch64' ;;  \
+        amd64) export FILENAME='ninja-linux' ;;  \
     esac;  \
     mkdir /opt/ninja;  \
-    wget -q -O "/tmp/ninja-linux${ARCH}.zip" "https://github.com/ninja-build/ninja/releases/download/v${MY_NINJA_VERSION}/ninja-linux${ARCH}.zip";  \
-    unzip "/tmp/ninja-linux${ARCH}.zip" -d /opt/ninja
-ENV PATH /opt/ninja:$PATH
+    wget -q -O "/tmp/${FILENAME}.zip" "https://github.com/ninja-build/ninja/releases/download/v${MY_NINJA_VERSION}/${FILENAME}.zip";  \
+    unzip "/tmp/${FILENAME}.zip" -d /opt/ninja
+ENV PATH=/opt/ninja:$PATH
 RUN ninja --version
 
 RUN apkArch="$(dpkg --print-architecture)";  \
@@ -83,13 +83,13 @@ RUN apkArch="$(dpkg --print-architecture)";  \
     mkdir /opt/mold;  \
     wget -q -O - "https://github.com/rui314/mold/releases/download/v${MY_MOLD_VERSION}/mold-${MY_MOLD_VERSION}-${ARCH}-linux.tar.gz"  \
       | tar -xzf - -C /opt/mold --strip-components 1
-ENV PATH /opt/mold/bin:$PATH
+ENV PATH=/opt/mold/bin:$PATH
 RUN mold --version
 
 #RUN apt-get install ruby-full -yq
 #RUN ruby --version && exit 1
 
-#ENV PATH /opt/rbenv/shims:/opt/rbenv/bin:/opt/rbenv/plugins/ruby-build/bin:$PATH
+#ENV PATH=/opt/rbenv/shims:/opt/rbenv/bin:/opt/rbenv/plugins/ruby-build/bin:$PATH
 #RUN git clone --depth 1 https://github.com/rbenv/rbenv.git /opt/rbenv
 #RUN git clone --depth 1 https://github.com/rbenv/ruby-build.git /opt/rbenv/plugins/ruby-build
 #RUN rbenv install ${MY_RUBY_VERSION} || cat /tmp/ruby-build.* || cat $(find /tmp | grep mkmf.log) && exit 1

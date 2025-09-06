@@ -4,8 +4,8 @@
 #FROM debian:latest as ikoznov_jupyter
 #FROM debian:stable-slim as ikoznov_jupyter
 #FROM debian:oldstable-slim as ikoznov_jupyter
-#FROM ubuntu:latest as ikoznov_jupyter
-FROM ubuntu:rolling as ikoznov_jupyter
+FROM ubuntu:latest as ikoznov_jupyter
+#FROM ubuntu:rolling as ikoznov_jupyter
 
 # TODO: use buildpack base images
 #       https://github.com/devcontainers/images/blob/main/src/base-ubuntu/.devcontainer/Dockerfile
@@ -128,23 +128,23 @@ RUN mold --version
 #    && make install  \
 #    && ruby --version
 
-RUN apt-get update  \
-    && apt-get install -y --no-install-recommends  \
-        python${MY_PYTHON_VERSION}  \
-        python${MY_PYTHON_VERSION}-dev  \
-        python${MY_PYTHON_VERSION}-venv
-
-#RUN --mount=type=cache,target=/var/cache/apt,sharing=locked  \
-#    --mount=type=cache,target=/var/lib/apt,sharing=locked  \
-#    add-apt-repository -y ppa:deadsnakes/ppa  \
-#    && apt-get update  \
+#RUN apt-get update  \
 #    && apt-get install -y --no-install-recommends  \
 #        python${MY_PYTHON_VERSION}  \
 #        python${MY_PYTHON_VERSION}-dev  \
 #        python${MY_PYTHON_VERSION}-venv
-##    && apt-get clean  \
-##    && rm -rf /var/lib/apt/lists/*
-#    #python${MY_PYTHON_VERSION}-distutils
+
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked  \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked  \
+    add-apt-repository -y ppa:deadsnakes/ppa  \
+    && apt-get update  \
+    && apt-get install -y --no-install-recommends  \
+        python${MY_PYTHON_VERSION}  \
+        python${MY_PYTHON_VERSION}-dev  \
+        python${MY_PYTHON_VERSION}-venv
+#    && apt-get clean  \
+#    && rm -rf /var/lib/apt/lists/*
+    #python${MY_PYTHON_VERSION}-distutils
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked  \
     --mount=type=cache,target=/var/lib/apt,sharing=locked  \

@@ -228,11 +228,12 @@ RUN --mount=type=cache,target=/root/.cache/pip  \
 #    pipx install "sccache" --include-deps  \
 #    && sccache --version
 
-RUN pipx install --global  \
+#RUN pipx install --global  \
+RUN pipx install  \
     "supervisor" --include-deps
-RUN supervisord --version
 
-RUN pipx install --global  \
+#RUN supervisord --version
+RUN pipx install  \
     "superlance" --include-deps
 
 RUN --mount=type=cache,target=/root/.cache/pip  \

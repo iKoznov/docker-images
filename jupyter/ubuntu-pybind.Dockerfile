@@ -31,9 +31,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # && apt-add-repository -y ppa:rael-gc/rvm  \
 
 # https://docs.docker.com/build/cache/optimize
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked  \
-    --mount=type=cache,target=/var/lib/apt,sharing=locked  \
-    apt-get update;  \
+RUN apt-get update;  \
     apt-get upgrade -yq;  \
     apt-get install -yq --no-install-recommends  \
         lsb-release software-properties-common gnupg  \
@@ -134,9 +132,7 @@ RUN mold --version
 #        python${MY_PYTHON_VERSION}-dev  \
 #        python${MY_PYTHON_VERSION}-venv
 
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked  \
-    --mount=type=cache,target=/var/lib/apt,sharing=locked  \
-    add-apt-repository -y ppa:deadsnakes/ppa  \
+RUN add-apt-repository -y ppa:deadsnakes/ppa  \
     && apt-get update  \
     && apt-get install -y --no-install-recommends  \
         python${MY_PYTHON_VERSION}  \
@@ -146,9 +142,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked  \
 #    && rm -rf /var/lib/apt/lists/*
     #python${MY_PYTHON_VERSION}-distutils
 
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked  \
-    --mount=type=cache,target=/var/lib/apt,sharing=locked  \
-    /bin/bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" all ${MY_CLANG_VERSION}  \
+RUN /bin/bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" all ${MY_CLANG_VERSION}  \
     && apt-get install -y --no-install-recommends  \
         clang-tools-${MY_CLANG_VERSION} libc++-${MY_CLANG_VERSION}-dev  \
     && update-alternatives --install /usr/bin/clang clang "/usr/bin/clang-${MY_CLANG_VERSION}" 1 --force  \
@@ -198,34 +192,28 @@ ENV PIPX_BIN_DIR="/usr/local/bin"
 #        && rm -rf /var/lib/apt/lists/* \
 #    }
 
-RUN --mount=type=cache,target=/root/.cache/pip  \
-    pipx install "conan>=2.0,<3.0" --include-deps  \
+RUN pipx install "conan>=2.0,<3.0" --include-deps  \
     && conan --version
     #--python python${MY_PYTHON_VERSION}
 
 # downgrade cmake because of CMAKE_ROOT error
 # pipx install "cmake>=3.28,!=3.31.*,<4.0" --include-deps
-RUN --mount=type=cache,target=/root/.cache/pip  \
-    pipx install "cmake>=4.0" --include-deps  \
+RUN pipx install "cmake>=4.0" --include-deps  \
     && update-alternatives --install /usr/bin/cmake cmake "${PIPX_BIN_DIR}/cmake" 1 --force  \
     && update-alternatives --install /usr/bin/ctest ctest "${PIPX_BIN_DIR}/ctest" 1 --force  \
     && update-alternatives --install /usr/bin/cpack cpack "${PIPX_BIN_DIR}/cpack" 1 --force  \
     && cmake --version
 
-#RUN --mount=type=cache,target=/root/.cache/pip  \
-#    pipx install "ninja>=1.12.1" --include-deps  \
+#RUN pipx install "ninja>=1.12.1" --include-deps  \
 #    && ninja --version
 
-RUN --mount=type=cache,target=/root/.cache/pip  \
-    pipx install "meson>=1.7.2" --include-deps  \
+RUN pipx install "meson>=1.7.2" --include-deps  \
     && meson --version
 
-#RUN --mount=type=cache,target=/root/.cache/pip  \
-#    pipx install "mold" --include-deps  \
+#RUN pipx install "mold" --include-deps  \
 #    && mold --version
 
-#RUN --mount=type=cache,target=/root/.cache/pip  \
-#    pipx install "sccache" --include-deps  \
+#RUN pipx install "sccache" --include-deps  \
 #    && sccache --version
 
 #RUN pipx install --global  \
@@ -236,8 +224,7 @@ RUN pipx install  \
 RUN pipx install  \
     "superlance" --include-deps
 
-RUN --mount=type=cache,target=/root/.cache/pip  \
-    pipx install "jupyterlab" --include-deps  \
+RUN pipx install "jupyterlab" --include-deps  \
     && jupyter labextension disable "@jupyterlab/apputils-extension:announcements"  \
     && jupyter --version
 
@@ -338,8 +325,7 @@ RUN python${MY_PYTHON_VERSION} -m venv ${MY_VIRTUAL_ENV}
 
 COPY requirements-cpp.txt /tmp
 # python -m pip install setuptools
-RUN --mount=type=cache,target=/root/.cache/pip  \
-    . ${MY_VIRTUAL_ENV}/bin/activate  \
+RUN . ${MY_VIRTUAL_ENV}/bin/activate  \
     && python -m pip install  \
         -r /tmp/requirements-cpp.txt  \
     && python -m pip cache remove "*"  \

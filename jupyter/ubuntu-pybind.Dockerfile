@@ -33,9 +33,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 # https://docs.docker.com/build/cache/optimize
 RUN apt-get update;  \
     apt-get upgrade -yq;  \
-    apt-get install -yq  \
+    apt-get install -yq --no-install-recommends  \
         lsb-release software-properties-common gnupg  \
-        wget curl unzip bash git gdb  \
+        wget curl unzip bash git git-lfs gdb  \
         pipx build-essential pkg-config automake autoconf libtool  \
         zlib1g-dev libffi-dev libssl-dev libreadline-dev sqlite3 libsqlite3-dev  \
         zsh sudo tree htop mc nmap netcat-traditional  \
@@ -50,9 +50,6 @@ RUN apt-get update;  \
         uuid-dev libxcb-cursor-dev libxcb-dri2-0-dev libxcb-dri3-dev  \
         libxcb-present-dev libxcb-composite0-dev libxcb-ewmh-dev libxcb-res0-dev  \
         libxcb-util-dev libxcb-util0-dev
-RUN apt-get update;  \
-    apt-get install -yq  \
-        git-lfs
 #cmake mold ninja-build
 #RUN apt-get build-dep -yq  \
 #        ruby-full python3

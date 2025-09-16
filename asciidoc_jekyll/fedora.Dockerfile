@@ -1,4 +1,4 @@
-FROM fedora:latest as ikoznov_jekyll
+FROM fedora:latest AS ikoznov_jekyll
 
 RUN dnf update -y
 

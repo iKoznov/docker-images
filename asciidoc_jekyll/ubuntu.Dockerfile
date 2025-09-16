@@ -1,4 +1,4 @@
-FROM ubuntu as ikoznov_jekyll
+FROM ubuntu AS ikoznov_jekyll
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update

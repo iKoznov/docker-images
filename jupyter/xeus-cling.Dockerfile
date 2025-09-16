@@ -1,6 +1,6 @@
 #FROM continuumio/anaconda3
 #FROM mambaorg/micromamba
-FROM condaforge/mambaforge as ikoznov_jupyter
+FROM condaforge/mambaforge AS ikoznov_jupyter
 
 WORKDIR /tmp
 

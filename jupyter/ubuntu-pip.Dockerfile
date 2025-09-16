@@ -1,6 +1,6 @@
 # https://medium.com/geekculture/creating-docker-image-conda-jupyter-notebook-for-social-scientists-8c8b8b259a9a
 
-FROM ubuntu as ikoznov_jupyter
+FROM ubuntu AS ikoznov_jupyter
 
 ARG PYTHON_VERSION=3.12
 ENV DEBIAN_FRONTEND=noninteractive

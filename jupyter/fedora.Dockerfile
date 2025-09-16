@@ -1,6 +1,6 @@
 # Start with base Fedora image
-FROM fedora:latest as ikoznov_fedora
-#FROM fedora:rawhide as ikoznov_fedora
+FROM fedora:latest AS ikoznov_fedora
+#FROM fedora:rawhide AS ikoznov_fedora
 
 ARG MY_VIRTUAL_ENV=/opt/venv
 

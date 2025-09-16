@@ -1,6 +1,6 @@
 # version is passed through by Docker.
 # shellcheck disable=SC2154
-FROM ubuntu:22.04 as linuxbrew
+FROM ubuntu:22.04 AS linuxbrew
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Deterministic UID (first user). Helps with docker build cache

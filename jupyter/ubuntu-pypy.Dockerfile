@@ -17,7 +17,7 @@
 #RUN jupyter labextension disable \
 #    "@jupyterlab/apputils-extension:announcements"
 
-FROM ubuntu as ikoznov_jupyter
+FROM ubuntu AS ikoznov_jupyter
 
 ARG DEBIAN_FRONTEND=noninteractive
 WORKDIR /tmp

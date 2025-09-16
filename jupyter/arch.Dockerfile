@@ -1,5 +1,5 @@
-#FROM menci/archlinuxarm as ikoznov_arch
-FROM gmanka/archlinuxarm as ikoznov_arch
+#FROM menci/archlinuxarm AS ikoznov_arch
+FROM gmanka/archlinuxarm AS ikoznov_arch
 
 RUN pacman -Syu --noconfirm
 

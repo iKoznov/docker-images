@@ -1,4 +1,4 @@
-FROM ubuntu as ikoznov_ubuntu
+FROM ubuntu AS ikoznov_ubuntu
 
 ARG DEBIAN_FRONTEND=noninteractive
 

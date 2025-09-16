@@ -33,7 +33,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # https://docs.docker.com/build/cache/optimize
 RUN apt-get update;  \
     apt-get upgrade -yq;  \
-    apt-get install -yq --no-install-recommends  \
+    apt-get install -yq  \
         lsb-release software-properties-common gnupg  \
         wget curl unzip bash git git-lfs gdb  \
         pipx build-essential pkg-config automake autoconf libtool  \

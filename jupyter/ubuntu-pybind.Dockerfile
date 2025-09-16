@@ -33,7 +33,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # https://docs.docker.com/build/cache/optimize
 RUN apt-get update;  \
     apt-get upgrade -yq;  \
-    apt-get install -yq  \
+    apt-get install -yq --no-install-recommends  \
         lsb-release software-properties-common gnupg  \
         wget curl unzip bash git gdb  \
         pipx build-essential pkg-config automake autoconf libtool  \
@@ -51,7 +51,7 @@ RUN apt-get update;  \
         libxcb-present-dev libxcb-composite0-dev libxcb-ewmh-dev libxcb-res0-dev  \
         libxcb-util-dev libxcb-util0-dev
 RUN apt-get update;  \
-    apt-get install -yq  \
+    apt-get install -yq --no-install-recommends  \
         git-lfs
 #cmake mold ninja-build
 #RUN apt-get build-dep -yq  \
@@ -130,14 +130,14 @@ RUN mold --version
 #    && ruby --version
 
 #RUN apt-get update  \
-#    && apt-get install -y  \
+#    && apt-get install -y --no-install-recommends  \
 #        python${MY_PYTHON_VERSION}  \
 #        python${MY_PYTHON_VERSION}-dev  \
 #        python${MY_PYTHON_VERSION}-venv
 
 RUN add-apt-repository -y ppa:deadsnakes/ppa  \
     && apt-get update  \
-    && apt-get install -y  \
+    && apt-get install -y --no-install-recommends  \
         python${MY_PYTHON_VERSION}  \
         python${MY_PYTHON_VERSION}-dev  \
         python${MY_PYTHON_VERSION}-venv
@@ -146,7 +146,7 @@ RUN add-apt-repository -y ppa:deadsnakes/ppa  \
     #python${MY_PYTHON_VERSION}-distutils
 
 RUN /bin/bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" all ${MY_CLANG_VERSION}  \
-    && apt-get install -y  \
+    && apt-get install -y --no-install-recommends  \
         clang-tools-${MY_CLANG_VERSION} libc++-${MY_CLANG_VERSION}-dev  \
     && update-alternatives --install /usr/bin/clang clang "/usr/bin/clang-${MY_CLANG_VERSION}" 1 --force  \
     && update-alternatives --install /usr/bin/clang++ clang++ "/usr/bin/clang++-${MY_CLANG_VERSION}" 1 --force
@@ -157,14 +157,14 @@ RUN /bin/bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" all ${MY_CLANG_VERS
         #llvm-${MY_CLANG_VERSION}-linker-tools
 
 #RUN apt-get update  \
-#    && apt-get install -y  \
+#    && apt-get install -y --no-install-recommends  \
 #        llvmgold-${MY_CLANG_VERSION}  \
 #    && ln -sf /usr/lib/LLVMgold.so /usr/lib/llvm-${MY_CLANG_VERSION}/lib/LLVMgold.so  \
 #    && apt-get clean  \
 #    && rm -rf /var/lib/apt/lists/*
 #
 #RUN apt-get update  \
-#    && apt-get install -y  \
+#    && apt-get install -y --no-install-recommends  \
 #        apt-file  \
 #    && apt-file update  \
 #    && apt-file find clang
@@ -187,7 +187,7 @@ ENV PIPX_BIN_DIR="/usr/local/bin"
 #        apt-get update;  \
 #    fi
 #        apt-get update  \
-#        && apt-get install -y  \
+#        && apt-get install -y --no-install-recommends  \
 #            python3-pip python3-venv python3-dev  \
 #        && python3 -m pip install --break-system-packages pipx  \
 #        && apt-get autoremove -y  \

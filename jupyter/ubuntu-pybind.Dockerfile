@@ -39,7 +39,7 @@ RUN apt-get update;  \
         pipx build-essential pkg-config automake autoconf libtool  \
         zlib1g-dev libffi-dev libssl-dev libreadline-dev sqlite3 libsqlite3-dev  \
         zsh sudo tree htop mc nmap netcat-traditional  \
-        libudev-dev libgl-dev libgl1-mesa-dev  \
+        libudev-dev libgl-dev libgl1-mesa-dev mesa-utils vulkan-tools   \
         libx11-xcb-dev libfontenc-dev libice-dev libsm-dev libxaw7-dev \
         libxcomposite-dev libxcursor-dev libxdamage-dev libxext-dev  \
         libxfixes-dev libxi-dev libxinerama-dev libxkbfile-dev libxmu-dev libxmuu-dev  \
